@@ -1,0 +1,66 @@
+
+.container{
+    label{
+       
+    }
+
+    .items{
+       
+    }
+   // background-color: aqua;
+    width: 100%;
+    border: 1px solid black;
+    padding: 2;
+    background-size: cover;
+    background-image: url("~/images/rayasA.jpg");
+}
+
+GridLayout{
+
+    border-width: 1;
+    border-color: rgb(0, 0, 0);
+    padding:5;
+    margin: 5;
+    max-height: 80;
+    background-color:white;
+}
+.label-item{
+    font-weight: 700;
+  
+ font-size:45%;
+ padding-top: 5;
+    text-align: center;
+    letter-spacing: 0.3;
+//    background-color: red;
+ }
+ .label-sub{
+    font-weight: 700;
+    padding-top: 5;
+    text-transform: uppercase;
+   // background-color: blue;
+    text-align: center;
+ }
+
+ .botonera{
+    //background-color: rgb(255, 13, 243);
+    padding-left: 14;
+    padding-right: 14;
+    label{
+        padding: -2;
+        font-weight: 700;
+        margin-top: 6;
+        border-width: 1;
+        text-align: center;
+    border-color: rgb(0, 0, 0);
+       background-color: green;
+    }
+     
+ }
+
+ .float-btn-container{
+     margin-top: 80%;
+     margin-left: 80%;
+
+ }
+
+ 

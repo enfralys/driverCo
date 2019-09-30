@@ -1,0 +1,30 @@
+/* Add mobile styles for the component here.  */
+/* Add mobile styles for the component here.  */
+
+StackLayout{
+    width: 100%;
+    
+}
+
+.date{
+    border-width: 1;
+    border-color: rgb(0, 0, 0);
+    width: 90%;
+}
+DatePickerField{
+    border-bottom: 0;
+    border-width: 0;
+}
+.textinput{
+    padding: 10;
+    margin-top: 10;
+    width: 100%;
+}
+
+.textlabel{
+    width: 100%;
+    font-size: 20   
+}
+.textIn{
+ text-emphasis: none;
+}

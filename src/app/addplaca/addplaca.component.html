@@ -1,0 +1,64 @@
+<ActionBar class="action-bar"   >
+      
+    
+        <!-- 
+        Use the NavigationButton as a side-drawer button in Android
+        because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed"   android.systemIcon="ic_menu_revert" (tap)="onDrawerButtonTap()"></NavigationButton>
+        <!-- 
+        Use the ActionItem for IOS with position set to left. Using the
+        NavigationButton as a side-drawer button in iOS is not possible,
+        because its function is to always navigate back in the application.
+        -->
+        <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+            ios.position="left">
+        </ActionItem>
+        <Label class="action-bar-title" text="Agregar Placa"></Label>
+        <ActionItem  ios.position="right"  (tap)="submit()">
+          <Button text="Listo" class="action-item"></Button>
+        </ActionItem>
+    </ActionBar>
+
+    <ScrollView>
+        <StackLayout>
+
+            <GridLayout rows="auto,auto" columns="auto,auto" class="textinput"> 
+                <label row="0" text="Placa" class="textlabel"></label>
+                <TextField row="1"   class="textIn" ></TextField>
+            </GridLayout>
+            <GridLayout rows="auto,auto" columns="auto,auto" class="textinput"> 
+                    <label row="0" text="Ciudad" class="textlabel"></label>
+                    <TextField row="1"   class="textIn" ></TextField>
+                </GridLayout>
+                <GridLayout rows="auto,auto" columns="auto,auto" class="textinput"> 
+                        <label row="0" text="Soat" class="textlabel"></label>
+                <FlexboxLayout  row="1" >
+                        <DatePickerField hint="Por favor seleccione la fecha "></DatePickerField>
+            </FlexboxLayout>
+
+                    </GridLayout>
+                    <GridLayout rows="auto,auto" columns="auto,auto" class="textinput"> 
+                        <label row="0" text="Tecnomecanica" class="textlabel"></label>
+                <FlexboxLayout  row="1" >
+                        <DatePickerField hint="Por favor seleccione la fecha"></DatePickerField>
+            </FlexboxLayout>
+
+                    </GridLayout>
+                    <GridLayout rows="auto,auto" columns="auto,auto" class="textinput"> 
+                        <label row="0" text="Licencia" class="textlabel"></label>
+                <FlexboxLayout  row="1" >
+                        <DatePickerField hint="Por favor seleccione la fecha"></DatePickerField>
+            </FlexboxLayout>
+
+                    </GridLayout>
+                    <GridLayout rows="auto,auto" columns="auto,auto" class="textinput"> 
+                        <label row="0" text="Cambio de aceite" class="textlabel"></label>
+                <FlexboxLayout  row="1" >
+                        <DatePickerField hint="Por favor seleccione la fecha su ultimo"></DatePickerField>
+            </FlexboxLayout>
+
+                    </GridLayout>
+        </StackLayout>
+        
+    </ScrollView>
