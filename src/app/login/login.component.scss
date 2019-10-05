@@ -1,42 +1,52 @@
 /* Add mobile styles for the component here.  */
+
+
 /* Add mobile styles for the component here.  */
+
 FlexboxLayout {
     justify-content: center;
     align-items: center;
     background-size: cover;
     background-image: url("~/images/aaa.jpg");
-  }
-  
-  action-bar{
-      background-color: black;
-      text-align: right;
-      
-  }
-  StackLayout {
+}
+
+action-bar {
+    background-color: black;
+    text-align: right;
+}
+
+StackLayout {
     width: 300;
-    height: 60%;
+    height: 46%;
     padding: 10 16;
     background-color: #f0f0f0;
-  }
-  Image {
+}
+
+Image {
     margin-bottom: 20;
     height: 70;
-  }
-  Button, TextField {
+}
+
+Button,
+TextField {
     margin-bottom: 10;
-  }
-  .btn-primary {
+}
+
+.btn-primary {
     background-color: rgb(0, 0, 0);
     margin-left: 0;
     margin-right: 0;
-  }
-  TextField {
+}
+
+TextField {
     placeholder-color: #C4AFB4;
     color: black;
-  }
-  .dark {
+}
+
+.dark {
     background-color: #301217;
-  }
-  .dark TextField {
-    color:  #C4AFB4;
-  }
+}
+
+.dark TextField {
+    color: #C4AFB4;
+}

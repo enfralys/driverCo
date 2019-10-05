@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { getString, setString } from "tns-core-modules/application-settings";
+import { getString, setString, setNumber, getNumber } from "tns-core-modules/application-settings";
 
 export class BackendService {
 
@@ -11,8 +11,23 @@ export class BackendService {
         return getString("token");
     }
 
-    
     static set token(theToken: string) {
         setString("token", theToken);
+    }
+
+    static get phoneNumber(): string {
+        return getString("phoneNumber");
+    }
+
+    static set phoneNumber(thePhoneNumber: string) {
+        setString("phoneNumber", thePhoneNumber);
+    }
+
+    static get code(): number {
+        return getNumber("code");
+    }
+
+    static set code(theCode: number) {
+        setNumber("code", theCode);
     }
 }

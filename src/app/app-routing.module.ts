@@ -3,10 +3,14 @@ import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { LoginComponent } from "./login/login.component";
 import { AddplacaComponent } from "./addplaca/addplaca.component";
+import { RegisterComponent } from "./register/register.component";
+import { CheckComponent } from "./login/check/check.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/home", pathMatch: "full" },
-    {path:"login", component: LoginComponent},
+    { path: "", redirectTo: "/login", pathMatch: "full" },
+    { path: "login", component: LoginComponent },
+    { path: "login-check", component: CheckComponent },
+    { path: "register", component: RegisterComponent },
     { path: 'addplaca',component: AddplacaComponent},
 
     { path: "home", loadChildren: "~/app/home/home.module#HomeModule" },

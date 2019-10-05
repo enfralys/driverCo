@@ -1,10 +1,15 @@
 <FlexboxLayout>
+
     <StackLayout class="form" [class.dark]="!isLoggingIn">
         <Image src="~/images/logo.png"></Image>
-        <TextField hint="Número de teléfono" keyboardType="number" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.number" class="input input-border"></TextField>
 
-        <!-- <TextField hint="Nombre" secure="true" [(ngModel)]="user.name" class="input input-border"></TextField> -->
+        <TextField hint="Numero celular" keyboardType="number" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.number" class="input input-border"></TextField>
+
+        <TextField hint="Nombre" secure="true" [(ngModel)]="user.name" class="input input-border"></TextField>
         <Button [text]="isLoggingIn ? 'Iniciar Sesión' : 'Sign In'" class="btn btn-primary" (tap)="submit()"></Button>
+
+
+
         <!-- <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()" hidden = "true"></Button>-->
     </StackLayout>
 </FlexboxLayout>

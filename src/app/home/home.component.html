@@ -1,45 +1,42 @@
 <ActionBar class="action-bar">
-    
-    <!-- 
+
+    <!--
     Use the NavigationButton as a side-drawer button in Android
     because ActionItems are shown on the right side of the ActionBar
     -->
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!-- 
+    <!--
     Use the ActionItem for IOS with position set to left. Using the
     NavigationButton as a side-drawer button in iOS is not possible,
     because its function is to always navigate back in the application.
     -->
-    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
+
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
+
     <Label class="action-bar-title" text="DriverCos"></Label>
 </ActionBar>
 
-    <AbsoluteLayout class="container" orientation="vertical" >
-        <ScrollView>
-            
-         <StackLayout>
-             
-        <GridLayout rows="70%,30%" columns="*,50" class="items" *ngFor="let fruit of cantidad"  [nsRouterLink]="['/featured']" > 
-                <label col="0" row="0" text="RFT-514" textWrap="true" class="label-item"></label>
-                <label col="0" row="1" text="Medellin" class="label-sub"></label>
-                      
-                <StackLayout  row="0" col="1" rowSpan="2" class="botonera">
-                <Label text="S"></Label>
-                <Label text="T"></Label>
-                <Label text="L"></Label>
-                <Label text="A"></Label>
-              
-                
-                </StackLayout>
-            </GridLayout> 
-        </StackLayout>
-        </ScrollView>  
-           <StackLayout class="float-btn-container" [nsRouterLink]="['/addplaca']">
-                <float-btn ></float-btn>
-           </StackLayout>
-           
-         
-  </AbsoluteLayout>
-  
+<AbsoluteLayout class="container" orientation="vertical">
+    <ScrollView>
+        <FlexboxLayout alignItems="center">
+            <StackLayout orientation="vertical" class="placa">
+                <GridLayout rows="70%,30%" columns="*,50" class="items" *ngFor="let fruit of cantidad" [nsRouterLink]="['/featured']">
+                    <label col="0" row="0" text="RFT-514" textWrap="true" class="label-item"></label>
+                    <label col="0" row="1" text="Medellin" class="label-sub"></label>
+                    <StackLayout row="0" col="1" rowSpan="2" class="botonera">
+                        <Label text="S"></Label>
+                        <Label text="T"></Label>
+                        <Label text="L"></Label>
+                        <Label text="A"></Label>
+                    </StackLayout>
+                </GridLayout>
+            </StackLayout>
+        </FlexboxLayout>
+    </ScrollView>
+    <StackLayout class="float-btn-container" [nsRouterLink]="['/addplaca']">
+        <float-btn></float-btn>
+    </StackLayout>
+
+
+</AbsoluteLayout>

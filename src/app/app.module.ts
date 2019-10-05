@@ -14,6 +14,8 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { LoginComponent } from './login/login.component';
 import { AddplacaComponent } from './addplaca/addplaca.component';
+import { RegisterComponent } from './register/register.component';
+import { CheckComponent } from "./login/check/check.component";
 
 @NgModule({
     bootstrap: [
@@ -32,10 +34,12 @@ import { AddplacaComponent } from './addplaca/addplaca.component';
         AppComponent,
         LoginComponent,
         AddplacaComponent,
+        RegisterComponent,
+        CheckComponent
         //LoginComponent,
-       
+
         //LogCComponent,
-       
+
       //  AddPlacaComponent
     ],
     schemas: [

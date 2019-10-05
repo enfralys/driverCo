@@ -1,0 +1,14 @@
+<FlexboxLayout>
+    <StackLayout class="form" [class.dark]="!isLoggingIn">
+        <Image src="~/images/logo.png"></Image>
+
+        <TextField hint="Código de confirmación" keyboardType="number" returnPress="onReturnPress" maxLength="6" secure="false" class="input input-border" [(ngModel)]="user.code"></TextField>
+
+        <Label [text]="countdown + ' / 300 Seg'" textWrap="true"></Label>
+        <Label text="En pocos segundos le llegará un mensaje de texto con el código de confirmación." textWrap="true"></Label>
+
+
+        <Button [text]="isLoggingIn ? 'Confirmar' : 'Confirm'" class="btn btn-primary" (tap)="submit()"></Button>
+        <!-- <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()" hidden = "true"></Button>-->
+    </StackLayout>
+</FlexboxLayout>

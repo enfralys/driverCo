@@ -13,14 +13,23 @@ export class UserapiService {
     login(data) {
 
       let json = {
-        cell: data.cell,
-        token: data.token
+        cell: data.cell
       }
       let params = json;
       console.log(params)
-      return this.http.post(`${this.server}/registeruser`, json)
+      return this.http.post(`${this.server}/login`, json)
     }
-  
-    
+
+    checkCode(data) {
+
+        let json = {
+          cell: data.cell,
+          token: data.token
+        }
+        let params = json;
+        console.log(params)
+        return this.http.post(`${this.server}/registeruser`, json)
+      }
+
 
 }
