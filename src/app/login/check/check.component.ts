@@ -43,6 +43,9 @@ export class CheckComponent implements OnInit {
 
     updateCurrenTime(){
         this.countdown = this.countdown - 1;
+        if (this.countdown === 0) {
+            this.countdown = 0;
+        }
     }
 
     async submit() {

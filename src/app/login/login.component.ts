@@ -21,21 +21,16 @@ export class LoginComponent implements OnInit {
         this.user = new User();
         this.user.number = "";
         this.user.name = "";
-        if (BackendService.token !== undefined) {
-            this.router.navigateByUrl('home')
-        }
+        // if (BackendService.token !== undefined) {
+        //     this.router.navigateByUrl('home')
+        // }
     }
 
     ngOnInit() {
-
+        console.log("Verificación de código: ", BackendService.token)
     }
 
     async submit() {
-        if (this.token == undefined)
-        {
-            this.token = this.makeid(16)
-        }
-
 
         if (!this.user.validate())
         {
@@ -50,10 +45,11 @@ export class LoginComponent implements OnInit {
             }
 
             this.userService.login(data).subscribe(res => {
-                if (res)
+                let response: any = res;
+
+                if (response)
                 {
-                    let response: any = res;
-                    BackendService.token = this.token;
+                    // BackendService.token = this.token;
                     BackendService.phoneNumber = this.user.number;
                     BackendService.code = response.code;
                     this.router.navigate(['login-check',])

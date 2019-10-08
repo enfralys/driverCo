@@ -7,7 +7,7 @@ import { RegisterComponent } from "./register/register.component";
 import { CheckComponent } from "./login/check/check.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/login", pathMatch: "full" },
+    { path: "", redirectTo: "/addplaca", pathMatch: "full" },
     { path: "login", component: LoginComponent },
     { path: "login-check", component: CheckComponent },
     { path: "register", component: RegisterComponent },

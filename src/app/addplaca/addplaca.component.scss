@@ -33,7 +33,11 @@ DatePickerField {
     text-emphasis: none;
 }
 
-.btnIcon {
-    font-family: "Ionicons";
-    font-size: 60;
+.btn-file {
+    border: none;
+    background-color: transparent;
+}
+
+.btn-file .fa {
+    font-size: 550;
 }

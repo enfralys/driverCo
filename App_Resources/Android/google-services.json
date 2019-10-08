@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "808975367894",
+    "firebase_url": "https://picoyplaca-d6413.firebaseio.com",
+    "project_id": "picoyplaca-d6413",
+    "storage_bucket": "picoyplaca-d6413.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808975367894:android:9fb5a741c63edf8a665377",
+        "android_client_info": {
+          "package_name": "com.ietecno.picoplaca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808975367894-1519cvpd89ffogt3bpfsos2fk76h08s6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5hvWtOD4Of20dZpCvO847K4y0lZab-4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808975367894-1519cvpd89ffogt3bpfsos2fk76h08s6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "808975367894-vbgqbjduuuanbualqpu454amig5ggpp6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ietecno.picoyplaca"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

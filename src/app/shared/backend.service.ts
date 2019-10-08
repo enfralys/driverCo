@@ -1,4 +1,3 @@
-import { Injectable } from "@angular/core";
 import { getString, setString, setNumber, getNumber } from "tns-core-modules/application-settings";
 
 export class BackendService {
