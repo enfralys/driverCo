@@ -9,14 +9,14 @@ import { UserapiService } from '../../services/userapi.service';
 
 
 @Component({
-  selector: 'ns-check',
-  templateUrl: './check.component.html',
-  styleUrls: ['./check.component.css']
+    selector: 'ns-check',
+    templateUrl: './check.component.html',
+    styleUrls: ['./check.component.css']
 })
 export class CheckComponent implements OnInit {
 
     user = {
-        number: 1,
+        number: BackendService.phoneNumber,
         code: '',
         validate() {
             if (this.code.length < 5) {
@@ -26,10 +26,13 @@ export class CheckComponent implements OnInit {
             return true;
         }
     }
-    countdown = 300;
+
+    phoneNumber = BackendService.phoneNumber;
+    countdown = 15;
+    fails = 0;
     isLoggingIn = true;
-    constructor(private router: Router, private page:Page, private userService: UserapiService)
-    {
+
+    constructor(private router: Router, private page: Page, private userService: UserapiService) {
         this.page.actionBarHidden = true;
     }
 
@@ -41,48 +44,95 @@ export class CheckComponent implements OnInit {
         console.log('Este es el code: ' + BackendService.code)
     }
 
-    updateCurrenTime(){
-        this.countdown = this.countdown - 1;
-        if (this.countdown === 0) {
-            this.countdown = 0;
+    ngOnChanges() {
+        this.updateCurrenTime();
+    }
+
+    updateCurrenTime() {
+        if (this.countdown !== 0) {
+            this.countdown = this.countdown - 1;
         }
     }
 
-    async submit() {
-        console.log(this.user.code)
-        if (!this.user.validate()) {
-            TNSFancyAlert.showWarning(
-                "¡Ups!",
-                "El código es incorrecto"
-            );
-        } else {
-            if (this.user.code === String(BackendService.code)) {
+    onExtractedValueChange(args) {
+        // `args.value` includes only extracted characters, for instance
+        // `1235551111` would be logged while the UI would display `(123) 555-1111`.
+        this.user.code = args.value;
+        console.log('Extracted value:', args.value);
+        if (this.user.code.length > 5) {
+            if (!this.user.validate() || this.user.code !== String(BackendService.code)) {
+                TNSFancyAlert.showWarning(
+                    "¡Ups!",
+                    "El código es incorrecto"
+                );
+            } else {
                 let data = {
                     cell: BackendService.phoneNumber,
                     token: BackendService.token
                 }
 
                 this.userService.checkCode(data).subscribe(res => {
-                    if (res)
-                    {
+                    if (res) {
                         // this.router.navigate(['login-check',])
                         this.router.navigateByUrl('home')
                         console.log(JSON.stringify(res))
-                    } else {
-                        //    this.router.navigate(['home',])
-                        TNSFancyAlert.showError(
-                            "¡El código no es válido!",
-                            "Por favor ingrese el código enviado"
-                        );
                     }
                 })
-                // this.router.navigateByUrl('home')
-            }else {
-                TNSFancyAlert.showError(
-                    "¡El código no es válido!",
-                    "Por favor ingrese el código enviado"
-                );
             }
         }
+    }
+
+    async submit() {
+        if (this.fails !== 3) {
+            TNSFancyAlert.showSuccess(
+                "¡Bien!",
+                "El código fue reenviado"
+            );
+            this.countdown = 15;
+            this.fails = this.fails + 1;
+            console.log(this.fails)
+        } else {
+            TNSFancyAlert.showWarning(
+                "¡Ups!",
+                "Parece que hay un problema con la recepción del código, intenta más tarde",
+                "Vale"
+            );
+            this.fails = this.fails + 1;
+        }
+
+        // console.log(this.user.code)
+        // if (!this.user.validate()) {
+        //     TNSFancyAlert.showWarning(
+        //         "¡Ups!",
+        //         "El código es incorrecto"
+        //     );
+        // } else {
+        //     if (this.user.code === String(BackendService.code)) {
+        //         let data = {
+        //             cell: BackendService.phoneNumber,
+        //             token: BackendService.token
+        //         }
+
+        //         this.userService.checkCode(data).subscribe(res => {
+        //             if (res) {
+        //                 // this.router.navigate(['login-check',])
+        //                 this.router.navigateByUrl('home')
+        //                 console.log(JSON.stringify(res))
+        //             } else {
+        //                 //    this.router.navigate(['home',])
+        //                 TNSFancyAlert.showError(
+        //                     "¡El código no es válido!",
+        //                     "Por favor ingrese el código enviado"
+        //                 );
+        //             }
+        //         })
+        //         // this.router.navigateByUrl('home')
+        //     } else {
+        //         TNSFancyAlert.showError(
+        //             "¡El código no es válido!",
+        //             "Por favor ingrese el código enviado"
+        //         );
+        //     }
+        // }
     }
 }

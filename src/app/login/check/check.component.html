@@ -2,13 +2,14 @@
     <StackLayout class="form" [class.dark]="!isLoggingIn">
         <Image src="~/images/logo.png"></Image>
 
-        <TextField hint="Código de confirmación" keyboardType="number" returnPress="onReturnPress" maxLength="6" secure="false" class="input input-border" [(ngModel)]="user.code"></TextField>
+        <InputMask keyboardType="phone" mask="[000]-[000]" hint="Código de confirmación" (extractedValueChange)=onExtractedValueChange($event) returnPress="onReturnPress" class="input input-border">
+        </InputMask>
+
+        <!-- <TextField hint="Código de confirmación" keyboardType="number" returnPress="onReturnPress" maxLength="6" secure="false" class="input input-border" [(ngModel)]="user.code"></TextField> -->
 
         <Label [text]="countdown + ' / 300 Seg'" textWrap="true"></Label>
-        <Label text="En pocos segundos le llegará un mensaje de texto con el código de confirmación." textWrap="true"></Label>
+        <Label text="Si el número es correcto recibirá un mensaje con el código de confirmación." textWrap="true"></Label>
 
-
-        <Button [text]="isLoggingIn ? 'Confirmar' : 'Confirm'" class="btn btn-primary" (tap)="submit()"></Button>
-        <!-- <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()" hidden = "true"></Button>-->
+        <Button [text]="isLoggingIn ? 'Solicitar nuevamente' : 'Request again'" isEnabled="{{ countdown!==0?false:(fails > 3 ? false:true ) }}" class="btn btn-primary" (tap)="submit()"></Button>
     </StackLayout>
 </FlexboxLayout>

@@ -39,6 +39,10 @@ TextField {
     margin-right: 0
 }
 
+.btn-primary:disabled {
+    color: gray;
+}
+
 TextField {
     placeholder-color: #C4AFB4;
     color: black

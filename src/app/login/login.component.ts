@@ -30,6 +30,14 @@ export class LoginComponent implements OnInit {
         console.log("Verificación de código: ", BackendService.token)
     }
 
+    onExtractedValueChange(args) {
+        // `args.value` includes only extracted characters, for instance
+        // `1235551111` would be logged while the UI would display `(123) 555-1111`.
+        this.user.number = args.value;
+        console.log('Extracted value:', args.value);
+        console.log('Número en variable: ', this.user.number)
+    }
+
     async submit() {
 
         if (!this.user.validate())

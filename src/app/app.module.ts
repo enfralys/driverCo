@@ -17,6 +17,8 @@ import { AddplacaComponent } from './addplaca/addplaca.component';
 import { RegisterComponent } from './register/register.component';
 import { CheckComponent } from "./login/check/check.component";
 
+import { InputMaskModule } from 'nativescript-input-mask/angular';
+
 @NgModule({
     bootstrap: [
         AppComponent,
@@ -28,7 +30,8 @@ import { CheckComponent } from "./login/check/check.component";
         NativeScriptFormsModule,
         NativeScriptRouterModule,
         NativeScriptUISideDrawerModule,
-        NativeScriptDateTimePickerModule
+        NativeScriptDateTimePickerModule,
+        InputMaskModule,
     ],
     declarations: [
         AppComponent,

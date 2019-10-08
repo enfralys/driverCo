@@ -1,10 +1,13 @@
 <FlexboxLayout>
     <StackLayout class="form" [class.dark]="!isLoggingIn">
         <Image src="~/images/logo.png"></Image>
-        <TextField hint="Número de teléfono" keyboardType="number" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.number" class="input input-border"></TextField>
+        <InputMask hint="Número de teléfono" keyboardType="phone" mask="+57 ([000]) [000]-[0000]" class="input input-border" (extractedValueChange)=onExtractedValueChange($event)>
+        </InputMask>
 
-        <!-- <TextField hint="Nombre" secure="true" [(ngModel)]="user.name" class="input input-border"></TextField> -->
-        <Button [text]="isLoggingIn ? 'Iniciar Sesión' : 'Sign In'" class="btn btn-primary" (tap)="submit()"></Button>
-        <!-- <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()" hidden = "true"></Button>-->
+        <!-- <TextField hint="Número de teléfono " keyboardType="number " autocorrect="false " autocapitalizationType="none " [(ngModel)]="user.number " class="input input-border "></TextField> -->
+
+        <!-- <TextField hint="Nombre " secure="true " [(ngModel)]="user.name " class="input input-border "></TextField> -->
+        <Button [text]="isLoggingIn ? 'Iniciar Sesión' : 'Sign In' " class="btn btn-primary " (tap)="submit() "></Button>
+        <!-- <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login' " (tap)="toggleDisplay() " hidden = "true "></Button>-->
     </StackLayout>
 </FlexboxLayout>
