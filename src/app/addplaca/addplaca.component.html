@@ -21,57 +21,55 @@
 
 <ScrollView>
     <StackLayout>
-
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Placa" class="textlabel"></label>
             <TextField row="1" class="textIn"></TextField>
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Ciudad" class="textlabel"></label>
-            <TextField row="1" class="textIn" maxLength="10"></TextField>
+            <ListPicker [items]="items" class="picker"></ListPicker>
+
+            <!-- <TextField row="1" class="textIn" maxLength="10"></TextField> -->
+
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Soat" class="textlabel"></label>
-            <FlexboxLayout row="1">
-                <DatePickerField hint="Por favor seleccione la fecha "></DatePickerField>
+            <DockLayout width="100%" row="1" stretchLastChild="true">
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento"></DatePickerField>
                 <Button class="btn-file">
                     <FormattedString>
                         <Span text="&#xf15c;" class="fa"></Span>
                     </FormattedString>
                 </Button>
-            </FlexboxLayout>
-
+            </DockLayout>
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Tecnomecanica" class="textlabel"></label>
-            <FlexboxLayout row="1">
-                <DatePickerField hint="Por favor seleccione la fecha"></DatePickerField>
+            <DockLayout width="100%" row="1" stretchLastChild="true">
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento"></DatePickerField>
                 <Button class="btn-file">
                     <FormattedString>
                         <Span text="&#xf15c;" class="fa"></Span>
                     </FormattedString>
                 </Button>
-            </FlexboxLayout>
-
+            </DockLayout>
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Licencia" class="textlabel"></label>
-            <FlexboxLayout row="1">
-                <DatePickerField hint="Por favor seleccione la fecha"></DatePickerField>
+            <DockLayout width="100%" row="1" stretchLastChild="true">
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento"></DatePickerField>
                 <Button class="btn-file">
                     <FormattedString>
                         <Span text="&#xf15c;" class="fa"></Span>
                     </FormattedString>
                 </Button>
-            </FlexboxLayout>
-
+            </DockLayout>
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Cambio de aceite" class="textlabel"></label>
-            <FlexboxLayout row="1">
-                <DatePickerField hint="Por favor seleccione la fecha su último"></DatePickerField>
-            </FlexboxLayout>
-
+            <DockLayout width="100%" row="1" stretchLastChild="true">
+                <DatePickerField width="100%" hint="Seleccione fecha de próximo cambio"></DatePickerField>
+            </DockLayout>
         </GridLayout>
     </StackLayout>
 

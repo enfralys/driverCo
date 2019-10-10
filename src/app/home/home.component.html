@@ -17,26 +17,23 @@
     <Label class="action-bar-title" text="DriverCo"></Label>
 </ActionBar>
 
-<AbsoluteLayout class="container" orientation="vertical">
-    <ScrollView>
-        <FlexboxLayout alignItems="center">
-            <StackLayout orientation="vertical" class="placa">
-                <GridLayout rows="70%,30%" columns="*,50" class="items" *ngFor="let fruit of cantidad" [nsRouterLink]="['/featured']">
-                    <label col="0" row="0" text="RFT-514" textWrap="true" class="label-item"></label>
-                    <label col="0" row="1" text="Medellin" class="label-sub"></label>
-                    <StackLayout row="0" col="1" rowSpan="2" class="botonera">
-                        <Label text="S"></Label>
-                        <Label text="T"></Label>
-                        <Label text="L"></Label>
-                        <Label text="A"></Label>
-                    </StackLayout>
-                </GridLayout>
-            </StackLayout>
-        </FlexboxLayout>
-    </ScrollView>
-    <StackLayout class="float-btn-container" [nsRouterLink]="['/addplaca']">
-        <float-btn></float-btn>
-    </StackLayout>
+<ScrollView>
+    <AbsoluteLayout class="container page" orientation="vertical">
+        <StackLayout orientation="vertical" class="placa">
+            <GridLayout rows="70%,30%" columns="*,50" horizontalAlignment="center" class="items" *ngFor="let fruit of cantidad" [nsRouterLink]="['/featured']">
+                <label col="0" row="0" text="RFT-514" textWrap="true" class="label-item"></label>
+                <label col="0" row="1" text="Medellin" class="label-sub"></label>
+                <StackLayout row="0" col="1" rowSpan="2" class="botonera">
+                    <Label text="S"></Label>
+                    <Label text="T"></Label>
+                    <Label text="L"></Label>
+                    <Label text="A"></Label>
+                </StackLayout>
+            </GridLayout>
+        </StackLayout>
+    </AbsoluteLayout>
+</ScrollView>
 
-
-</AbsoluteLayout>
+<StackLayout class="float-btn-container" [nsRouterLink]="['/addplaca']">
+    <float-btn></float-btn>
+</StackLayout>

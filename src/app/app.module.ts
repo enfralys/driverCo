@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NgModule, NgModuleFactoryLoader, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -7,9 +7,6 @@ import { NativeScriptDateTimePickerModule } from "nativescript-datetimepicker/an
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { floatBtnComponent } from "./home/floatbutton.component";
-//import { LoginComponent } from "./login/login.component";
-//import { LogCComponent } from "./login/log-c/log-c.component";
-//import { AddPlacaComponent } from "./add-placa/add-placa.component";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { LoginComponent } from './login/login.component';

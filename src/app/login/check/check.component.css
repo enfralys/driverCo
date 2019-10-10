@@ -36,16 +36,21 @@ TextField {
 .btn-primary {
     background-color: #000;
     margin-left: 0;
-    margin-right: 0
+    margin-right: 0;
 }
 
-.btn-primary:disabled {
+Label .btn-primary:disabled {
     color: gray;
+}
+
+Label .countdown {
+    text-align: center;
 }
 
 TextField {
     placeholder-color: #C4AFB4;
-    color: black
+    color: black;
+    text-align: center;
 }
 
 .dark {

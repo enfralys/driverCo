@@ -13,6 +13,12 @@
     background-image: url("~/images/home-bg.jpg");
 }
 
+.container .items {
+    justify-content: center;
+    align-items: center;
+    vertical-align: center;
+}
+
 .placa {
     justify-content: center;
     align-items: center;
@@ -61,6 +67,7 @@ GridLayout {
 }
 
 .float-btn-container {
-    margin-top: 84%;
-    margin-left: 78%;
+    margin: 15;
+    horizontal-align: right;
+    vertical-align: bottom;
 }

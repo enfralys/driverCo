@@ -7,7 +7,11 @@
         <!-- <TextField hint="Número de teléfono " keyboardType="number " autocorrect="false " autocapitalizationType="none " [(ngModel)]="user.number " class="input input-border "></TextField> -->
 
         <!-- <TextField hint="Nombre " secure="true " [(ngModel)]="user.name " class="input input-border "></TextField> -->
-        <Button [text]="isLoggingIn ? 'Iniciar Sesión' : 'Sign In' " class="btn btn-primary " (tap)="submit() "></Button>
+        <Ripple rippleColor="#f5f5f5" (tap)="submit()" class="btn btn-primary">
+            <Label [text]="isLoggingIn ? 'Iniciar Sesión' : 'Sign In'" color="#fff" textWrap="true"></Label>
+        </Ripple>
+
+        <!-- <Button [text]="isLoggingIn ? 'Iniciar Sesión' : 'Sign In' " class="btn btn-primary " (tap)="submit() "></Button> -->
         <!-- <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login' " (tap)="toggleDisplay() " hidden = "true "></Button>-->
     </StackLayout>
 </FlexboxLayout>

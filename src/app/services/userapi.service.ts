@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserapiService {
     constructor(private http: HttpClient) { }
 
-    server = "http://134.209.117.20:5000"
+    server = "http://138.68.31.167:5000"
 
 
     login(data) {

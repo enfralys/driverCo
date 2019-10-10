@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { User, BackendService } from '../shared';
-import { Page } from 'tns-core-modules/ui/page/page';
 import { Router } from '@angular/router';
+import { User, BackendService } from '../shared';
+import { Component, OnInit } from '@angular/core';
+import { Page } from 'tns-core-modules/ui/page/page';
+import * as firebase from 'nativescript-plugin-firebase';
 import { UserapiService } from '../services/userapi.service';
 import { TNSFancyAlert, TNSFancyAlertButton } from "nativescript-fancyalert";
 
@@ -21,13 +22,9 @@ export class LoginComponent implements OnInit {
         this.user = new User();
         this.user.number = "";
         this.user.name = "";
-        // if (BackendService.token !== undefined) {
-        //     this.router.navigateByUrl('home')
-        // }
-    }
-
-    ngOnInit() {
-        console.log("Verificación de código: ", BackendService.token)
+        if (BackendService.token !== undefined) {
+            this.router.navigateByUrl('home')
+        }
     }
 
     onExtractedValueChange(args) {
@@ -38,7 +35,14 @@ export class LoginComponent implements OnInit {
         console.log('Número en variable: ', this.user.number)
     }
 
+    ngOnInit(){
+        console.log("Verificación de código: ", BackendService.token)
+    }
+
     async submit() {
+
+        await firebase.getCurrentPushToken().then(res => BackendService.token = res);
+        console.log("Verificación de código: ", BackendService.token)
 
         if (!this.user.validate())
         {
@@ -73,15 +77,4 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    makeid(length)
-    {
-        var result           = '';
-        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charactersLength = characters.length;
-        for (var i = 0; i < length; i++)
-        {
-           result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-     }
 }

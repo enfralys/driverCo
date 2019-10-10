@@ -6,12 +6,12 @@ import { Component, OnInit } from "@angular/core";
 
     <StackLayout  class="float-btn">
         <Label text="+" class="float-btn-text"></Label>
-        
+
     </StackLayout>
     `,
     styles:[`
         .float-btn{
-            background-color: white;
+            background-color: #535353;
             width:56;
             border-radius:28;
             height: 56;
@@ -20,14 +20,14 @@ import { Component, OnInit } from "@angular/core";
         }
 
         .float-btn-text {
-            color: black;
+            color: white;
             font-size:36;
         }
     `]
 })
 export class floatBtnComponent {
 
-    
 
-  
+
+
 }

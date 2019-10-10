@@ -12,6 +12,7 @@ export class AddplacaComponent implements OnInit {
     minDate: Date = new Date(1975, 0, 29);
     maxDate: Date = new Date(2045, 4, 12);
 
+    items = [''];
 
     constructor(private router: Router)
     {
@@ -43,6 +44,10 @@ export class AddplacaComponent implements OnInit {
     onYearChanged(args) {
         console.log("Year New value: " + args.value);
         console.log("Year Old value: " + args.oldValue);
+    }
+
+    onItemSelected(args) {
+        console.log(args.value);
     }
 
     submit() {

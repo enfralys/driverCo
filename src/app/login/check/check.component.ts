@@ -85,8 +85,8 @@ export class CheckComponent implements OnInit {
     async submit() {
         if (this.fails !== 3) {
             TNSFancyAlert.showSuccess(
-                "¡Bien!",
-                "El código fue reenviado"
+                "¡Mensaje Reenviado!",
+                "El código ha sido reenviado de manera exitosa."
             );
             this.countdown = 15;
             this.fails = this.fails + 1;

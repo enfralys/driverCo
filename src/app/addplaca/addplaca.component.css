@@ -11,7 +11,7 @@ StackLayout {
 DatePickerField {
     border-bottom: 0;
     border-width: 0;
-    padding-right: 50%;
+    width: 100%;
 }
 
 .textinput {
@@ -40,4 +40,15 @@ DatePickerField {
 
 .btn-file .fa {
     font-size: 30;
+}
+
+.picker {
+    background-color: blanchedalmond;
+    color: red;
+    border-color: brown;
+    border-radius: 20;
+    border-width: 2;
+    width: 200;
+    height: 100;
+    vertical-align: middle;
 }
