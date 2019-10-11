@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { CheckComponent } from "./login/check/check.component";
 
 import { InputMaskModule } from 'nativescript-input-mask/angular';
+import { InternetConnectionService } from "./shared/services/internet-connection.service";
 
 @NgModule({
     bootstrap: [
@@ -44,6 +45,9 @@ import { InputMaskModule } from 'nativescript-input-mask/angular';
     ],
     schemas: [
         NO_ERRORS_SCHEMA
+    ],
+    providers: [
+        InternetConnectionService
     ]
 })
 export class AppModule { }

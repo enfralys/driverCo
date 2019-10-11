@@ -5,26 +5,59 @@ import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "tns-core-modules/ui/page";
 import * as app from "tns-core-modules/application";
 
+import { SqliteService } from "../shared/services/sqlite.service";
+import { InternetConnectionService } from "../shared/services/internet-connection.service";
+
+//SQLite library
+var Sqlite = require("nativescript-sqlite");
+
 @Component({
     selector: "Home",
     moduleId: module.id,
     templateUrl: "./home.component.html",
-    styleUrls:['./home.component.scss']
+    styleUrls: ['./home.component.scss']
 
 })
 export class HomeComponent implements OnInit {
-    cantidad=[0,1,2,3,4,5,6]
-    constructor(private _page: Page) {
+
+    cantidad: boolean = false;
+    db: any;
+    badges: Array<any>;
+
+
+    constructor(private _page: Page, private database: SqliteService, public internetConnection: InternetConnectionService) {
         // Use the component constructor to inject providers.
     }
 
     ngOnInit(): void {
         // Init your component properties here.
+        this.selectBadges();
     }
 
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
+    }
+
+    selectBadges() {
+        this.badges = [];
+        this.database.getdbConnection()
+            .then(db => {
+                db.all("SELECT * FROM badges").then(rows => {
+                    if (rows.length > 0) {
+                        for (var row in rows) {
+                            this.badges.push({
+                                "badge": rows[row][1],
+                                "city": rows[row][2]
+                            });
+                        }
+                        this.db = db;
+                        this.cantidad = true;
+                    }
+                }, error => {
+                    console.log("SELECT ERROR", error);
+                });
+            });
     }
 
 }

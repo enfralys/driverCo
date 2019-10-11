@@ -4,9 +4,8 @@ import { Component, OnInit } from "@angular/core";
     selector: "float-btn",
     template: `
 
-    <StackLayout  class="float-btn">
+    <StackLayout class="float-btn">
         <Label text="+" class="float-btn-text"></Label>
-
     </StackLayout>
     `,
     styles:[`

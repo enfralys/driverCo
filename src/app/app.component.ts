@@ -5,6 +5,8 @@ import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 
+import { SqliteService } from "./shared/services/sqlite.service";
+
 @Component({
     moduleId: module.id,
     selector: "ns-app",
@@ -15,8 +17,17 @@ export class AppComponent implements OnInit {
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;
 
-    constructor(private router: Router, private routerExtensions: RouterExtensions) {
+    constructor(private router: Router, private routerExtensions: RouterExtensions, private database: SqliteService) {
         // Use the component constructor to inject services.
+        this.database.getdbConnection()
+            .then(db => {
+                db.execSQL("CREATE TABLE IF NOT EXISTS badges ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , badge TEXT NOT NULL , city TEXT NOT NULL, soat_exp_date NUMERIC NOT NULL, tecmec_exp_date NUMERIC NOT NULL, license_exp_date NUMERIC NOT NULL, next_oil_change NUMERIC NOT NULL)").then(() => {
+                }, error => {
+                    console.log("CREATE TABLE ERROR", error);
+                });
+            }, error => {
+                console.log("OPEN DB ERROR", error);
+            });
     }
 
     ngOnInit(): void {

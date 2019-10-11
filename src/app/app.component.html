@@ -38,7 +38,6 @@ https://docs.nativescript.org/angular/ui/professional-ui-components/ng-SideDrawe
                     <Label col="0" text="&#xf005;" class="fa"></Label>
                     <Label col="1" text="Register" class="p-r-10"></Label>
                 </GridLayout> -->
-
                 <StackLayout class="hr-light"></StackLayout>
 
                 <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/settings')" (tap)="onNavItemTap('/settings')">
@@ -48,6 +47,5 @@ https://docs.nativescript.org/angular/ui/professional-ui-components/ng-SideDrawe
             </StackLayout>
         </ScrollView>
     </GridLayout>
-
     <page-router-outlet tkMainContent class="page page-content"></page-router-outlet>
 </RadSideDrawer>
