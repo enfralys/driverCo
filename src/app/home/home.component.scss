@@ -34,6 +34,15 @@ GridLayout {
     background-color: white;
 }
 
+.placa-empty {
+    border-width: 1;
+    border-color: rgb(0, 0, 0);
+    padding: 5;
+    margin: 5;
+    height: 100%;
+    background-color: white;
+}
+
 .label-item {
     font-weight: 700;
     font-size: 45%;
