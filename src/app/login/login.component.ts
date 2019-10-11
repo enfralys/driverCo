@@ -35,17 +35,15 @@ export class LoginComponent implements OnInit {
         console.log('Número en variable: ', this.user.number)
     }
 
-    ngOnInit(){
-        console.log("Verificación de código: ", BackendService.token)
+    ngOnInit() {
     }
 
     async submit() {
 
-        await firebase.getCurrentPushToken().then(res => BackendService.token = res);
-        console.log("Verificación de código: ", BackendService.token)
+        // await firebase.getCurrentPushToken().then(res => BackendService.token = res);
+        // console.log("Verificación de código: ", BackendService.token)
 
-        if (!this.user.validate())
-        {
+        if (!this.user.validate()) {
             TNSFancyAlert.showWarning(
                 "¡Ha ocurrido un problema!",
                 "El número no es válido"
@@ -56,24 +54,31 @@ export class LoginComponent implements OnInit {
                 cell: this.user.number
             }
 
-            this.userService.login(data).subscribe(res => {
-                let response: any = res;
+            this.userService.login(data).subscribe(
+                res => {
+                    let response: any = res;
 
-                if (response)
-                {
-                    // BackendService.token = this.token;
-                    BackendService.phoneNumber = this.user.number;
-                    BackendService.code = response.code;
-                    this.router.navigate(['login-check',])
-                    //    this.router.navigate(['home',])
-                } else {
-                    //    this.router.navigate(['home',])
+                    if (response) {
+                        // BackendService.token = this.token;
+                        BackendService.phoneNumber = this.user.number;
+                        BackendService.code = response.code;
+                        this.router.navigate(['login-check',])
+                        //    this.router.navigate(['home',])
+                    } else {
+                        //    this.router.navigate(['home',])
+                        TNSFancyAlert.showError(
+                            "¡Ha ocurrido un problema!",
+                            "El servidor no se encuentra disponible"
+                        );
+                    }
+                },
+                err => {
+                    console.log(err)
                     TNSFancyAlert.showError(
                         "¡Ha ocurrido un problema!",
-                        "El servidor no se encuentra disponible"
+                        "Por favor intente más tarde"
                     );
-                }
-            })
+                })
         }
     }
 

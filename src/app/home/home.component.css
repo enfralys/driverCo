@@ -30,6 +30,7 @@ ScrollView {
 
 .label-sub {
     font-weight: 700;
+    font-size: 30%;
     padding-top: 5;
     text-transform: uppercase;
     text-align: center

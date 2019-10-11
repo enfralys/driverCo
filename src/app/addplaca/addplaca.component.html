@@ -1,7 +1,6 @@
 <ActionBar class="action-bar">
-
-
     <!--
+
         Use the NavigationButton as a side-drawer button in Android
         because ActionItems are shown on the right side of the ActionBar
         -->
@@ -18,24 +17,21 @@
         <Button text="Guardar" class="action-item"></Button>
     </ActionItem>
 </ActionBar>
-
 <ScrollView>
     <StackLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Placa" class="textlabel"></label>
-            <TextField row="1" class="textIn"></TextField>
+            <TextField autocapitalizationType="allCharacters" maxLength="7" row="1" class="textIn badge" [(ngModel)]="badge" (textChange)="mask($event)"></TextField>
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Ciudad" class="textlabel"></label>
-            <ListPicker [items]="items" class="picker"></ListPicker>
-
+            <ListPicker row="1" [items]="items" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event)" class="textIn picker"></ListPicker>
             <!-- <TextField row="1" class="textIn" maxLength="10"></TextField> -->
-
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Soat" class="textlabel"></label>
             <DockLayout width="100%" row="1" stretchLastChild="true">
-                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento"></DatePickerField>
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="soat($event)"></DatePickerField>
                 <Button class="btn-file">
                     <FormattedString>
                         <Span text="&#xf15c;" class="fa"></Span>
@@ -46,7 +42,7 @@
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Tecnomecanica" class="textlabel"></label>
             <DockLayout width="100%" row="1" stretchLastChild="true">
-                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento"></DatePickerField>
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="tecnoMech($event)"></DatePickerField>
                 <Button class="btn-file">
                     <FormattedString>
                         <Span text="&#xf15c;" class="fa"></Span>
@@ -57,7 +53,7 @@
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Licencia" class="textlabel"></label>
             <DockLayout width="100%" row="1" stretchLastChild="true">
-                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento"></DatePickerField>
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="license($event)"></DatePickerField>
                 <Button class="btn-file">
                     <FormattedString>
                         <Span text="&#xf15c;" class="fa"></Span>
@@ -68,9 +64,8 @@
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Cambio de aceite" class="textlabel"></label>
             <DockLayout width="100%" row="1" stretchLastChild="true">
-                <DatePickerField width="100%" hint="Seleccione fecha de próximo cambio"></DatePickerField>
+                <DatePickerField width="100%" hint="Seleccione fecha de próximo cambio" (dateChange)="oilChange($event)"></DatePickerField>
             </DockLayout>
         </GridLayout>
     </StackLayout>
-
 </ScrollView>

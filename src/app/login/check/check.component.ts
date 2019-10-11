@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { setInterval } from "tns-core-modules/timer";
 import { TNSFancyAlert } from 'nativescript-fancyalert';
+import * as firebase from 'nativescript-plugin-firebase';
 import { BackendService } from '~/app/shared/backend.service';
 
 import { UserapiService } from '../../services/userapi.service';
@@ -26,7 +27,7 @@ export class CheckComponent implements OnInit {
             return true;
         }
     }
-
+    token;
     phoneNumber = BackendService.phoneNumber;
     countdown = 15;
     fails = 0;
@@ -37,9 +38,9 @@ export class CheckComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.settoken();
         this.updateCurrenTime();
         setInterval(() => { this.updateCurrenTime() }, 1000);
-        console.log('Esto es el token: ' + BackendService.token)
         console.log('Este es el número: ' + BackendService.phoneNumber)
         console.log('Este es el code: ' + BackendService.code)
     }
@@ -54,7 +55,11 @@ export class CheckComponent implements OnInit {
         }
     }
 
-    onExtractedValueChange(args) {
+    async   settoken() {
+        await firebase.getCurrentPushToken().then(res => this.token = res);
+        console.log(this.token)
+    }
+    async onExtractedValueChange(args) {
         // `args.value` includes only extracted characters, for instance
         // `1235551111` would be logged while the UI would display `(123) 555-1111`.
         this.user.code = args.value;
@@ -68,16 +73,28 @@ export class CheckComponent implements OnInit {
             } else {
                 let data = {
                     cell: BackendService.phoneNumber,
-                    token: BackendService.token
+                    token: this.token
                 }
 
-                this.userService.checkCode(data).subscribe(res => {
-                    if (res) {
-                        // this.router.navigate(['login-check',])
-                        this.router.navigateByUrl('home')
-                        console.log(JSON.stringify(res))
-                    }
-                })
+                this.userService.checkCode(data).subscribe(
+                    res => {
+                        if (res) {
+                            // this.router.navigate(['login-check',])
+                            BackendService.token = this.token;
+                            this.router.navigateByUrl('home');
+                            console.log(JSON.stringify(res));
+
+                            console.log("Token actual: ", BackendService.token);
+                        }
+                    },
+                    err => {
+                        console.log(err)
+                        this.user.code = '';
+                        TNSFancyAlert.showError(
+                            "¡Ha ocurrido un problema!",
+                            "No hemos podido verificar el código"
+                        );
+                    })
             }
         }
     }
@@ -91,6 +108,29 @@ export class CheckComponent implements OnInit {
             this.countdown = 15;
             this.fails = this.fails + 1;
             console.log(this.fails)
+
+            let data = {
+                cell: BackendService.phoneNumber
+            }
+
+            this.userService.login(data).subscribe(
+                res => {
+                    let response: any = res;
+
+                    if (response) {
+                        // BackendService.token = this.token;
+                        BackendService.code = response.code;
+                        console.log('Nuevo código: ', BackendService.code)
+                        //    this.router.navigate(['home',])
+                    }
+                },
+                err => {
+                    console.log(err)
+                    TNSFancyAlert.showError(
+                        "¡Ha ocurrido un problema!",
+                        "Por favor intente más tarde"
+                    );
+                })
         } else {
             TNSFancyAlert.showWarning(
                 "¡Ups!",
@@ -99,40 +139,5 @@ export class CheckComponent implements OnInit {
             );
             this.fails = this.fails + 1;
         }
-
-        // console.log(this.user.code)
-        // if (!this.user.validate()) {
-        //     TNSFancyAlert.showWarning(
-        //         "¡Ups!",
-        //         "El código es incorrecto"
-        //     );
-        // } else {
-        //     if (this.user.code === String(BackendService.code)) {
-        //         let data = {
-        //             cell: BackendService.phoneNumber,
-        //             token: BackendService.token
-        //         }
-
-        //         this.userService.checkCode(data).subscribe(res => {
-        //             if (res) {
-        //                 // this.router.navigate(['login-check',])
-        //                 this.router.navigateByUrl('home')
-        //                 console.log(JSON.stringify(res))
-        //             } else {
-        //                 //    this.router.navigate(['home',])
-        //                 TNSFancyAlert.showError(
-        //                     "¡El código no es válido!",
-        //                     "Por favor ingrese el código enviado"
-        //                 );
-        //             }
-        //         })
-        //         // this.router.navigateByUrl('home')
-        //     } else {
-        //         TNSFancyAlert.showError(
-        //             "¡El código no es válido!",
-        //             "Por favor ingrese el código enviado"
-        //         );
-        //     }
-        // }
     }
 }

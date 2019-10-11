@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { filter } from "rxjs/operators";
+import { Component, OnInit } from "@angular/core";
+import * as app from "tns-core-modules/application";
 import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
-import { filter } from "rxjs/operators";
-import * as app from "tns-core-modules/application";
 
 @Component({
     moduleId: module.id,
     selector: "ns-app",
     templateUrl: "app.component.html"
 })
+
 export class AppComponent implements OnInit {
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;

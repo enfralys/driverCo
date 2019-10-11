@@ -29,6 +29,12 @@ DatePickerField {
     text-emphasis: none
 }
 
+TextField,
+DatePickerField {
+    text-transform: uppercase;
+    text-align: center;
+}
+
 .btn-file {
     background-color: gray;
     color: white;
@@ -43,12 +49,8 @@ DatePickerField {
 }
 
 .picker {
-    background-color: blanchedalmond;
-    color: red;
-    border-color: brown;
-    border-radius: 20;
-    border-width: 2;
-    width: 200;
+    width: 100%;
     height: 100;
-    vertical-align: middle;
+    vertical-align: center;
+    margin-bottom: -10;
 }
