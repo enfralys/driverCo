@@ -136,14 +136,14 @@ export class AddplacaComponent implements OnInit {
         if (this.badge.length > 4) {
             this.database.getdbConnection()
                 .then(db => {
-                    db.execSQL("INSERT INTO badges (badge, city, soat_exp_date, tecmec_exp_dat, license_exp_date, next_oil_change) VALUES (?, ?, ?, ?, ?, ?)", [this.badge, this.city, this.soat_exp_date, this.tecmec_exp_date, this.license_exp_date, this.next_oil_change]).then(id => {
+                    db.execSQL("INSERT INTO badges (badge, city, soat_exp_date, tecmec_exp_date, license_exp_date, next_oil_change) VALUES (?, ?, ?, ?, ?, ?)", [this.badge, this.city, this.soat_exp_date, this.tecmec_exp_date, this.license_exp_date, this.next_oil_change]).then(id => {
                         console.log("INSERT RESULT", id);
                         // this.fetch();
                         TNSFancyAlert.showSuccess(
                             "¡Excelente!",
                             "Sus datos fueron guardados"
                         );
-
+                        this.router.navigateByUrl('/home')
                     }, err => {
                         console.log("INSERT ERROR", err);
                         TNSFancyAlert.showError(
