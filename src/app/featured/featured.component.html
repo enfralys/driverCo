@@ -11,7 +11,7 @@
     -->
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
-    <Label class="action-bar-title" text="FTR-525"></Label>
+    <Label class="action-bar-title" [text]="badge.badge"></Label>
 </ActionBar>
 
 <GridLayout>
@@ -21,28 +21,28 @@
                 <StackLayout class="card-layout">
                     <Label class="h2" text="SOAT"></Label>
                     <Label class="body" textWrap="true" text="VENCIMIENTO"></Label>
-                    <Label class="date" textWrap="true" text="00/00/000"></Label>
+                    <Label class="date" textWrap="true" [text]="soat_exp_date"></Label>
                 </StackLayout>
             </CardView>
             <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3">
                 <StackLayout class="card-layout">
                     <Label class="h2" text="TECNO"></Label>
                     <Label class="body" textWrap="true" text="VENCIMIENTO"></Label>
-                    <Label class="date" textWrap="true" text="00/00/000"></Label>
+                    <Label class="date" textWrap="true" [text]="tecmec_exp_date"></Label>
                 </StackLayout>
             </CardView>
             <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3">
                 <StackLayout class="card-layout">
                     <Label class="h2" text="LICENCIA"></Label>
                     <Label class="body" textWrap="true" text="VENCIMIENTO"></Label>
-                    <Label class="date" textWrap="true" text="00/00/000"></Label>
+                    <Label class="date" textWrap="true" [text]="license_exp_date"></Label>
                 </StackLayout>
             </CardView>
             <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3">
                 <StackLayout class="card-layout">
                     <Label class="h2" text="CAMBIO DE ACEITE"></Label>
-                    <Label class="body" textWrap="true" text="PROXIMO"></Label>
-                    <Label class="date" textWrap="true" text="00/00/000"></Label>
+                    <Label class="body" textWrap="true" text="PRÓXIMO"></Label>
+                    <Label class="date" textWrap="true" [text]="next_oil_change"></Label>
                 </StackLayout>
             </CardView>
         </StackLayout>

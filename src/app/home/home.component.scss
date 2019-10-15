@@ -74,6 +74,9 @@ GridLayout {
         border-color: rgb(0, 0, 0);
         background-color: green;
     }
+    label .inactive {
+        background-color: red;
+    }
 }
 
 .float-btn-container {

@@ -1,4 +1,4 @@
-import { getString, setString, setNumber, getNumber } from "tns-core-modules/application-settings";
+import { getString, setString, setNumber, getNumber, setBoolean, getBoolean } from "tns-core-modules/application-settings";
 
 export class BackendService {
 
@@ -29,4 +29,14 @@ export class BackendService {
     static set code(theCode: number) {
         setNumber("code", theCode);
     }
+
+    static get upload(): boolean {
+        return getBoolean("upload");
+    }
+
+    static set upload(theUpload: boolean) {
+        setBoolean("upload", theUpload);
+    }
+
+
 }

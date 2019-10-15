@@ -1,4 +1,5 @@
 import { NgModule, NgModuleFactoryLoader, NO_ERRORS_SCHEMA } from "@angular/core";
+import { DatePipe } from '@angular/common';
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -47,7 +48,8 @@ import { InternetConnectionService } from "./shared/services/internet-connection
         NO_ERRORS_SCHEMA
     ],
     providers: [
-        InternetConnectionService
+        InternetConnectionService,
+        DatePipe
     ]
 })
 export class AppModule { }

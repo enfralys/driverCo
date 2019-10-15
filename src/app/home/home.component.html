@@ -31,9 +31,6 @@
     </AbsoluteLayout>
 </ScrollView>
 
-<StackLayout class="connection-status-bar">
-    <Label class="title" text="{{(internetConnection.connectionStatus$ | async) ? 'ONLINE' : 'OFFLINE'}}"></Label>
-</StackLayout>
 
 <StackLayout class="float-btn-container" [nsRouterLink]="['/addplaca']">
     <float-btn></float-btn>

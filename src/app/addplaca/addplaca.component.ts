@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventData } from "tns-core-modules/data/observable";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
-import { DatePicker } from 'tns-core-modules/ui/date-picker/date-picker';
 import { TNSFancyAlert, TNSFancyAlertButton } from 'nativescript-fancyalert';
 
 import { SqliteService } from "../shared/services/sqlite.service";
+import { BackendService } from '../shared/backend.service';
 
 @Component({
     selector: 'ns-addplaca',
@@ -144,6 +144,7 @@ export class AddplacaComponent implements OnInit {
                             "Sus datos fueron guardados"
                         );
                         this.router.navigateByUrl('/home')
+                        BackendService.upload = true;
                     }, err => {
                         console.log("INSERT ERROR", err);
                         TNSFancyAlert.showError(

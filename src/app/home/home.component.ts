@@ -9,6 +9,7 @@ import { SqliteService } from "../shared/services/sqlite.service";
 import { InternetConnectionService } from "../shared/services/internet-connection.service";
 import { FeaturedComponent } from "../featured/featured.component";
 import { UserapiService } from "../services/userapi.service";
+import { BackendService } from "../shared";
 
 //SQLite library
 var Sqlite = require("nativescript-sqlite");
@@ -24,9 +25,13 @@ export class HomeComponent implements OnInit {
     cantidad: boolean = false;
     db: any;
     badges: Array<any>;
+    S;
+    T;
+    L;
+    A;
 
 
-    constructor(private _page: Page,private userapi:UserapiService, private database: SqliteService, public internetConnection: InternetConnectionService) {
+    constructor(private _page: Page, private userapi: UserapiService, private database: SqliteService, public internetConnection: InternetConnectionService) {
         // Use the component constructor to inject providers.
     }
 
@@ -35,10 +40,11 @@ export class HomeComponent implements OnInit {
         this.selectBadges();
     }
 
-        setdetail(obj){
+    setdetail(obj) {
         this.userapi.setobDetail(obj);
         console.log(obj);
-        }
+    }
+
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
@@ -53,7 +59,11 @@ export class HomeComponent implements OnInit {
                         for (var row in rows) {
                             this.badges.push({
                                 "badge": rows[row][1],
-                                "city": rows[row][2]
+                                "city": rows[row][2],
+                                "soat_exp_date": rows[row][3],
+                                "tecmec_exp_date": rows[row][4],
+                                "license_exp_date": rows[row][5],
+                                "next_oil_change": rows[row][6]
                             });
                         }
                         this.db = db;
