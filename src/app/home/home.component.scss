@@ -72,8 +72,11 @@ GridLayout {
         border-width: 1;
         text-align: center;
         border-color: rgb(0, 0, 0);
+    }
+    label .active {
         background-color: green;
     }
+
     label .inactive {
         background-color: red;
     }
