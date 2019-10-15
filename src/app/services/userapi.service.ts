@@ -6,10 +6,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserapiService {
     constructor(private http: HttpClient) { }
-
+    obDetail;
     server = "http://138.68.31.167:5000"
 
+     getobDetail() {
+      let object = this.obDetail;
+      return object;
+    }
 
+    
+    setobDetail(obj:any):void {
+       this.obDetail = obj;
+     
+    }
     login(data) {
 
       let json = {
