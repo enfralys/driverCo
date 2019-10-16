@@ -37,6 +37,4 @@ export class BackendService {
     static set upload(theUpload: boolean) {
         setBoolean("upload", theUpload);
     }
-
-
 }

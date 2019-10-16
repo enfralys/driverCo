@@ -7,13 +7,9 @@ import { NativeScriptDateTimePickerModule } from "nativescript-datetimepicker/an
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { floatBtnComponent } from "./home/floatbutton.component";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { HttpClientModule } from "@angular/common/http";
-import { LoginComponent } from './login/login.component';
-import { AddplacaComponent } from './addplaca/addplaca.component';
 import { RegisterComponent } from './register/register.component';
-import { CheckComponent } from "./login/check/check.component";
 
 import { InputMaskModule } from 'nativescript-input-mask/angular';
 import { InternetConnectionService } from "./shared/services/internet-connection.service";
@@ -34,15 +30,9 @@ import { InternetConnectionService } from "./shared/services/internet-connection
     ],
     declarations: [
         AppComponent,
-        LoginComponent,
-        AddplacaComponent,
+        // LoginComponent,
+        // AddplacaComponent,
         RegisterComponent,
-        CheckComponent
-        //LoginComponent,
-
-        //LogCComponent,
-
-      //  AddPlacaComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

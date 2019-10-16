@@ -9,7 +9,6 @@ import { SqliteService } from "../shared/services/sqlite.service";
 import { InternetConnectionService } from "../shared/services/internet-connection.service";
 import { FeaturedComponent } from "../featured/featured.component";
 import { UserapiService } from "../services/userapi.service";
-import { BackendService } from "../shared";
 
 //SQLite library
 var Sqlite = require("nativescript-sqlite");
@@ -25,10 +24,6 @@ export class HomeComponent implements OnInit {
     cantidad: boolean = false;
     db: any;
     badges: Array<any>;
-    S;
-    T;
-    L;
-    A;
 
 
     constructor(private _page: Page, private userapi: UserapiService, private database: SqliteService, public internetConnection: InternetConnectionService) {
@@ -50,7 +45,7 @@ export class HomeComponent implements OnInit {
         sideDrawer.showDrawer();
     }
 
-    selectBadges() {
+    async selectBadges() {
         this.badges = [];
         this.database.getdbConnection()
             .then(db => {

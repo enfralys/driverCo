@@ -44,6 +44,11 @@ DatePickerField {
     height: 50;
 }
 
+Ripple Label {
+    vertical-align: center;
+    text-align: center;
+}
+
 .btn-file .fa {
     font-size: 30;
 }

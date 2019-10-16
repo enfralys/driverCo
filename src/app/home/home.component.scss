@@ -19,18 +19,13 @@
     vertical-align: center;
 }
 
-.placa {
-    justify-content: center;
-    align-items: center;
-    vertical-align: center;
-}
-
 GridLayout {
     border-width: 1;
     border-color: rgb(0, 0, 0);
     padding: 5;
     margin: 5;
     max-height: 80;
+    min-width: 330;
     background-color: white;
 }
 
@@ -73,22 +68,16 @@ GridLayout {
         text-align: center;
         border-color: rgb(0, 0, 0);
     }
-    label .active {
+    .active {
         background-color: green;
     }
-
-    label .inactive {
-        background-color: red;
+    .inactive {
+        background-color: rgb(175, 0, 0);
     }
 }
 
 .float-btn-container {
-    margin: 15;
+    margin: 5;
     horizontal-align: right;
-    vertical-align: bottom;
-}
-
-.connection-status-bar {
-    padding: 3%;
     vertical-align: bottom;
 }

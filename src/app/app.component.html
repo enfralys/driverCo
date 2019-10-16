@@ -29,10 +29,10 @@ https://docs.nativescript.org/angular/ui/professional-ui-components/ng-SideDrawe
                     <Label col="1" text="Search" class="p-r-10"></Label>
                 </GridLayout>
 -->
-                <GridLayout [nsRouterLink]="['/login']" columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/featured')" (tap)="onNavItemTap('/login')">
+                <!-- <GridLayout [nsRouterLink]="['/login']" columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/featured')" (tap)="onNavItemTap('/login')">
                     <Label col="0" text="&#xf005;" class="fa"></Label>
                     <Label col="1" text="Login" class="p-r-10"></Label>
-                </GridLayout>
+                </GridLayout> -->
 
                 <!-- <GridLayout [nsRouterLink]="['/register']" columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/featured')" (tap)="onNavItemTap('/register')">
                     <Label col="0" text="&#xf005;" class="fa"></Label>
@@ -42,8 +42,12 @@ https://docs.nativescript.org/angular/ui/professional-ui-components/ng-SideDrawe
 
                 <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/settings')" (tap)="onNavItemTap('/settings')">
                     <Label col="0" text="&#xf013;" class="fa"></Label>
-                    <Label col="1" text="Configuracion" class="p-r-10"></Label>
+                    <Label col="1" text="Configuración" class="p-r-10"></Label>
                 </GridLayout>
+                <!-- <GridLayout (tap)="(logout())" columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/logout')" (tap)="onNavItemTap('/logout')">
+                    <Label col="0" text="&#xf2f5;" class="fa"></Label>
+                    <Label col="1" text="Salir" class="p-r-10"></Label>
+                </GridLayout> -->
             </StackLayout>
         </ScrollView>
     </GridLayout>

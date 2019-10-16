@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventData } from "tns-core-modules/data/observable";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
-import { TNSFancyAlert, TNSFancyAlertButton } from 'nativescript-fancyalert';
+import { TNSFancyAlert } from 'nativescript-fancyalert';
 
 import { SqliteService } from "../shared/services/sqlite.service";
 import { BackendService } from '../shared/backend.service';
 
 @Component({
-    selector: 'ns-addplaca',
+    selector: 'addplaca',
     templateUrl: './addplaca.component.html',
     styleUrls: ['./addplaca.component.css'],
     moduleId: module.id,
@@ -22,6 +22,7 @@ export class AddplacaComponent implements OnInit {
     tecmec_exp_date;
     license_exp_date;
     next_oil_change;
+    processing = false;
 
 
     minDate: Date = new Date(1975, 0, 29);
@@ -107,15 +108,17 @@ export class AddplacaComponent implements OnInit {
     }
 
     mask(args) {
-        // console.log('Valor: ',args.value)
-        // console.log('Placa: ', this.badge)
+        console.log('Valor: ',args.value)
+        console.log('Placa: ', this.badge)
+        console.log('Longitud: ', args.value.length)
         if (args.value.length === 6 && !args.value.includes('-') && !args.value.includes(' ')) {
             let a = args.value.substring(0, 3);
             let b = args.value.substring(3, 6);
-            // console.log(a + b);
+            console.log(a + b);
 
             let res = a + '-' + b;
             this.badge = res;
+            console.log(this.badge)
         }
     }
 
@@ -124,6 +127,7 @@ export class AddplacaComponent implements OnInit {
     }
 
     submit() {
+        this.processing = true;
 
         console.log('Datos almacenados: ')
         console.log('Placa: ', this.badge)
@@ -143,9 +147,11 @@ export class AddplacaComponent implements OnInit {
                             "¡Excelente!",
                             "Sus datos fueron guardados"
                         );
+                        this.processing = false;
                         this.router.navigateByUrl('/home')
                         BackendService.upload = true;
                     }, err => {
+                        this.processing = false;
                         console.log("INSERT ERROR", err);
                         TNSFancyAlert.showError(
                             "¡Ha ocurrido un problema!",
@@ -158,6 +164,7 @@ export class AddplacaComponent implements OnInit {
                 "¡Atención!",
                 "La placa no es válida"
             );
+            this.processing = false;
         }
     }
 }

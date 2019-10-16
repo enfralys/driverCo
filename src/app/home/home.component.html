@@ -15,16 +15,17 @@
     <Label class="action-bar-title" text="DriverCo"></Label>
 </ActionBar>
 <ScrollView>
-    <AbsoluteLayout class="container page" orientation="vertical" col="0" row="0">
+    <AbsoluteLayout class="container page" orientation="vertical">
         <StackLayout orientation="vertical" class="placa" *ngIf="cantidad === true">
-            <GridLayout rows="70%,30%" columns="*,50" horizontalAlignment="center" class="items" *ngFor="let badge of badges" (tap)="setdetail(badge)" [nsRouterLink]="['/featured']">
+            <GridLayout rows="80%,20%" columns="auto,50" horizontalAlignment="center" class="items" *ngFor="let badge of badges" (tap)="setdetail(badge)" [nsRouterLink]="['/featured']">
                 <label col="0" row="0" [text]="badge.badge" textWrap="true" class="label-item"></label>
                 <label col="0" row="1" [text]="badge.city" class="label-sub"></label>
+
                 <StackLayout row="0" col="1" rowSpan="2" class="botonera">
-                    <Label text="S" [ngClass]="(badge.soat_exp_date != null) ? 'active' : 'inactive'"></Label>
-                    <Label text="T" [ngClass]="(badge.tecmec_exp_date != null) ? 'active' : 'inactive'"></Label>
-                    <Label text="L" [ngClass]="(badge.license_exp_date != null) ? 'active' : 'inactive'"></Label>
-                    <Label text="A" [ngClass]="(badge.next_oil_change != null) ? 'active' : 'inactive'"></Label>
+                    <Label text="S" [ngClass]="(badge.soat_exp_date !== null) ? 'active' : 'inactive'"></Label>
+                    <Label text="T" [ngClass]="(badge.tecmec_exp_date !== null) ? 'active' : 'inactive'"></Label>
+                    <Label text="L" [ngClass]="(badge.license_exp_date !== null) ? 'active' : 'inactive'"></Label>
+                    <Label text="A" [ngClass]="(badge.next_oil_change !== null) ? 'active' : 'inactive'"></Label>
                 </StackLayout>
             </GridLayout>
         </StackLayout>

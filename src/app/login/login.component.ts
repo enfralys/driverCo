@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
     user: User;
     token;
     isLoggingIn = true;
+    processing = false;
 
     constructor(private page: Page, private router: Router, private userService: UserapiService) {
         this.page.actionBarHidden = true;
@@ -36,10 +37,12 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+
     }
 
-    async submit() {
+    async submit(){
 
+        this.processing = true;
         // await firebase.getCurrentPushToken().then(res => BackendService.token = res);
         // console.log("Verificación de código: ", BackendService.token)
 
@@ -48,7 +51,7 @@ export class LoginComponent implements OnInit {
                 "¡Ha ocurrido un problema!",
                 "El número no es válido"
             );
-
+            this.processing = false;
         } else {
             let data = {
                 cell: this.user.number
@@ -62,14 +65,14 @@ export class LoginComponent implements OnInit {
                         // BackendService.token = this.token;
                         BackendService.phoneNumber = this.user.number;
                         BackendService.code = response.code;
+                        this.processing = false;
                         this.router.navigate(['login-check',])
-                        //    this.router.navigate(['home',])
                     } else {
-                        //    this.router.navigate(['home',])
                         TNSFancyAlert.showError(
                             "¡Ha ocurrido un problema!",
                             "El servidor no se encuentra disponible"
                         );
+                        this.processing = false;
                     }
                 },
                 err => {
@@ -78,6 +81,7 @@ export class LoginComponent implements OnInit {
                         "¡Ha ocurrido un problema!",
                         "Por favor intente más tarde"
                     );
+                    this.processing = false;
                 })
         }
     }

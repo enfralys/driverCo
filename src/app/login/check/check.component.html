@@ -2,18 +2,15 @@
     <StackLayout class="form" [class.dark]="!isLoggingIn">
         <Image src="~/images/logo.png"></Image>
 
-        <InputMask keyboardType="phone" mask="[000]-[000]" hint="Código de confirmación" (extractedValueChange)=onExtractedValueChange($event) returnPress="onReturnPress" class="input input-border">
+        <InputMask keyboardType="phone" mask="[000]-[000]" hint="Código de confirmación" (extractedValueChange)=onExtractedValueChange($event) returnPress="onReturnPress" class="input input-border" [isEnabled]="!processing">
         </InputMask>
-
-        <!-- <TextField hint="Código de confirmación" keyboardType="number" returnPress="onReturnPress" maxLength="6" secure="false" class="input input-border" [(ngModel)]="user.code"></TextField> -->
 
         <Label [text]="countdown + ' / 300 Seg'" class="countdown" textWrap="true"></Label>
         <Label text="Si el número es correcto recibirá un mensaje con el código de confirmación." textWrap="true"></Label>
 
-        <Ripple rippleColor="#f5f5f5" (tap)="submit()" class="btn btn-primary" isEnabled="{{ countdown!==0?false:(fails> 3 ? false:true ) }}">
+        <Ripple rippleColor="#f5f5f5" (tap)="submit()" class="btn btn-primary" isEnabled="{{ countdown!==0?false:(fails> 3 ? false:true ) }}" [isEnabled]="!processing">
             <Label [text]="isLoggingIn ? 'Solicitar nuevamente' : 'Request again'" textAlignment="center" textTransform="uppercase" textWrap="true"></Label>
         </Ripple>
-
-        <!-- <Button [text]="isLoggingIn ? 'Solicitar nuevamente' : 'Request again'" isEnabled="{{ countdown!==0?false:(fails > 3 ? false:true ) }}" class="btn btn-primary" (tap)="submit()"></Button> -->
+        <ActivityIndicator horizontalAlignment="center" [busy]="processing"></ActivityIndicator>
     </StackLayout>
 </FlexboxLayout>

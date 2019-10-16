@@ -13,59 +13,64 @@
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
     <Label class="action-bar-title" text="Registro de Placa"></Label>
-    <ActionItem ios.position="right" (tap)="submit()">
+    <ActionItem ios.position="right" (tap)="submit()" [isEnabled]="!processing">
         <Button text="Guardar" class="action-item"></Button>
     </ActionItem>
 </ActionBar>
+
 <ScrollView>
     <StackLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Placa" class="textlabel"></label>
-            <TextField autocapitalizationType="allCharacters" maxLength="7" row="1" class="textIn badge" [(ngModel)]="badge" (textChange)="mask($event)"></TextField>
+            <TextField autocapitalizationType="allCharacters" text="{{ badge }}" maxLength="7" row="1" class="textIn badge" [(ngModel)]="badge" (textChange)="mask($event)" [isEnabled]="!processing"></TextField>
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Ciudad" class="textlabel"></label>
-            <ListPicker row="1" [items]="items" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event)" class="textIn picker"></ListPicker>
+            <ListPicker row="1" [items]="items" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event)" class="textIn picker" [isEnabled]="!processing"></ListPicker>
             <!-- <TextField row="1" class="textIn" maxLength="10"></TextField> -->
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Soat" class="textlabel"></label>
             <DockLayout width="100%" row="1" stretchLastChild="true">
-                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="soat($event)"></DatePickerField>
-                <Button class="btn-file">
-                    <FormattedString>
-                        <Span text="&#xf15c;" class="fa"></Span>
-                    </FormattedString>
-                </Button>
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="soat($event)" [isEnabled]="!processing"></DatePickerField>
+                <StackLayout orientation="vertical">
+                    <Ripple rippleColor="#f5f5f5" class="btn-file" borderRadius="5" height="40" width="40">
+                        <Label text="&#xf0c6;" fontSize="30" horizontalAlignment="center" color="#fff" class="fa" textWrap="true"></Label>
+                    </Ripple>
+                </StackLayout>
             </DockLayout>
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Tecnomecanica" class="textlabel"></label>
             <DockLayout width="100%" row="1" stretchLastChild="true">
-                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="tecnoMech($event)"></DatePickerField>
-                <Button class="btn-file">
-                    <FormattedString>
-                        <Span text="&#xf15c;" class="fa"></Span>
-                    </FormattedString>
-                </Button>
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="tecnoMech($event)" [isEnabled]="!processing"></DatePickerField>
+                <StackLayout orientation="vertical">
+                    <Ripple rippleColor="#f5f5f5" class="btn-file" borderRadius="5" height="40" width="40">
+                        <Label text="&#xf0c6;" fontSize="30" horizontalAlignment="center" color="#fff" class="fa" textWrap="true"></Label>
+                    </Ripple>
+                </StackLayout>
             </DockLayout>
         </GridLayout>
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Licencia" class="textlabel"></label>
             <DockLayout width="100%" row="1" stretchLastChild="true">
-                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="license($event)"></DatePickerField>
-                <Button class="btn-file">
-                    <FormattedString>
-                        <Span text="&#xf15c;" class="fa"></Span>
-                    </FormattedString>
-                </Button>
+                <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="license($event)" [isEnabled]="!processing"></DatePickerField>
+                <StackLayout orientation="vertical">
+                    <Ripple rippleColor="#f5f5f5" class="btn-file" borderRadius="5" height="40" width="40">
+                        <Label text="&#xf0c6;" fontSize="30" horizontalAlignment="center" color="#fff" class="fa" textWrap="true"></Label>
+                    </Ripple>
+                </StackLayout>
             </DockLayout>
         </GridLayout>
+
         <GridLayout rows="auto,auto" columns="auto,auto" class="textinput">
             <label row="0" text="Cambio de aceite" class="textlabel"></label>
             <DockLayout width="100%" row="1" stretchLastChild="true">
-                <DatePickerField width="100%" hint="Seleccione fecha de próximo cambio" (dateChange)="oilChange($event)"></DatePickerField>
+                <DatePickerField width="100%" hint="Seleccione fecha de próximo cambio" (dateChange)="oilChange($event)" [isEnabled]="!processing"></DatePickerField>
             </DockLayout>
         </GridLayout>
+
+
+        <ActivityIndicator horizontalAlignment="center" [busy]="processing"></ActivityIndicator>
     </StackLayout>
 </ScrollView>

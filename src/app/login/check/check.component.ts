@@ -32,6 +32,7 @@ export class CheckComponent implements OnInit {
     countdown = 15;
     fails = 0;
     isLoggingIn = true;
+    processing = false;
 
     constructor(private router: Router, private page: Page, private userService: UserapiService) {
         this.page.actionBarHidden = true;
@@ -55,21 +56,24 @@ export class CheckComponent implements OnInit {
         }
     }
 
-    async   settoken() {
+    async settoken() {
         await firebase.getCurrentPushToken().then(res => this.token = res);
         console.log(this.token)
     }
     async onExtractedValueChange(args) {
+
         // `args.value` includes only extracted characters, for instance
         // `1235551111` would be logged while the UI would display `(123) 555-1111`.
         this.user.code = args.value;
         console.log('Extracted value:', args.value);
         if (this.user.code.length > 5) {
+            this.processing = true;
             if (!this.user.validate() || this.user.code !== String(BackendService.code)) {
                 TNSFancyAlert.showWarning(
                     "¡Ups!",
                     "El código es incorrecto"
                 );
+                this.processing = false;
             } else {
                 let data = {
                     cell: BackendService.phoneNumber,
@@ -79,17 +83,17 @@ export class CheckComponent implements OnInit {
                 this.userService.checkCode(data).subscribe(
                     res => {
                         if (res) {
-                            // this.router.navigate(['login-check',])
                             BackendService.token = this.token;
+                            this.processing = false;
                             this.router.navigateByUrl('home');
                             console.log(JSON.stringify(res));
-
                             console.log("Token actual: ", BackendService.token);
                         }
                     },
                     err => {
                         console.log(err)
                         this.user.code = '';
+                        this.processing = false;
                         TNSFancyAlert.showError(
                             "¡Ha ocurrido un problema!",
                             "No hemos podido verificar el código"
@@ -100,7 +104,9 @@ export class CheckComponent implements OnInit {
     }
 
     async submit() {
+        this.processing = true;
         if (this.fails !== 3) {
+            this.processing = false;
             TNSFancyAlert.showSuccess(
                 "¡Mensaje Reenviado!",
                 "El código ha sido reenviado de manera exitosa."
@@ -132,6 +138,7 @@ export class CheckComponent implements OnInit {
                     );
                 })
         } else {
+            this.processing = false;
             TNSFancyAlert.showWarning(
                 "¡Ups!",
                 "Parece que hay un problema con la recepción del código, intenta más tarde",

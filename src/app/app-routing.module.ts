@@ -2,16 +2,15 @@ import { NgModule } from "@angular/core";
 import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { LoginComponent } from "./login/login.component";
-import { AddplacaComponent } from "./addplaca/addplaca.component";
+// import { AddplacaComponent } from "./addplaca/addplaca.component";
 import { RegisterComponent } from "./register/register.component";
 import { CheckComponent } from "./login/check/check.component";
 
 const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full" },
-    { path: "login", component: LoginComponent },
-    { path: "login-check", component: CheckComponent },
-    { path: "register", component: RegisterComponent },
-    { path: 'addplaca',component: AddplacaComponent},
+    { path: "login", loadChildren: "~/app/login/login.module#LoginModule" },
+    { path: "login-check", loadChildren: "~/app/login/check/check.module#CheckModule" },
+    { path: "addplaca", loadChildren: "~/app/addplaca/addplaca.module#AddplacaModule"},
 
     { path: "home", loadChildren: "~/app/home/home.module#HomeModule" },
     { path: "browse", loadChildren: "~/app/browse/browse.module#BrowseModule" },
