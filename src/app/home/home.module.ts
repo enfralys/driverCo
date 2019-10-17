@@ -3,7 +3,6 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 
 import { HomeRoutingModule } from "./home-routing.module";
 import { HomeComponent } from "./home.component";
-import { floatBtnComponent } from "./floatbutton.component";
 
 @NgModule({
     imports: [
@@ -11,8 +10,7 @@ import { floatBtnComponent } from "./floatbutton.component";
         HomeRoutingModule
     ],
     declarations: [
-        HomeComponent,
-        floatBtnComponent
+        HomeComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

@@ -123,7 +123,7 @@ export class AddplacaComponent implements OnInit {
     }
 
     onDrawerButtonTap() {
-        this.router.navigateByUrl('/home')
+        this.router.navigateByUrl('/badges')
     }
 
     submit() {
@@ -148,7 +148,7 @@ export class AddplacaComponent implements OnInit {
                             "Sus datos fueron guardados"
                         );
                         this.processing = false;
-                        this.router.navigateByUrl('/home')
+                        this.router.navigateByUrl('/badges')
                         BackendService.upload = true;
                     }, err => {
                         this.processing = false;
