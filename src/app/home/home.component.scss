@@ -2,18 +2,26 @@
     background-color: black;
 }
 
-.isandro {
-    padding-right: 15;
-}
-
-.menu-icon {
-    font-size: 26;
-    color: #a8a8a8;
-    vertical-align: center;
-}
-
 .page {
     width: 100%;
     background-size: cover;
     background-image: url("~/images/home-bg.jpg");
 }
+
+Scrollview {
+    height: auto;
+}
+
+.card {
+    background-color: #fff;
+    color: #4d4d4d;
+    margin: 15 15 0;
+    border-width: 1;
+    border-color: black;
+    padding: 30;
+    margin-bottom: 10;
+}
+
+// .card-layout {
+//     padding: 20;
+// }

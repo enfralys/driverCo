@@ -5,12 +5,14 @@
         <InputMask keyboardType="phone" mask="[000]-[000]" hint="Código de confirmación" (extractedValueChange)=onExtractedValueChange($event) returnPress="onReturnPress" class="input input-border" [isEnabled]="!processing">
         </InputMask>
 
+        <ActivityIndicator horizontalAlignment="center" [busy]="processing"></ActivityIndicator>
+
         <Label [text]="countdown + ' / 300 Seg'" class="countdown" textWrap="true"></Label>
         <Label text="Si el número es correcto recibirá un mensaje con el código de confirmación." textWrap="true"></Label>
 
-        <Ripple rippleColor="#f5f5f5" (tap)="submit()" class="btn btn-primary" isEnabled="{{ countdown!==0?false:(fails> 3 ? false:true ) }}" [isEnabled]="!processing">
+        <Ripple rippleColor="#f5f5f5" (tap)="submit()" class="btn btn-primary" isEnabled="{{ countdown!==0?false:(fails> 3 ? false:true ) }}">
             <Label [text]="isLoggingIn ? 'Solicitar nuevamente' : 'Request again'" textAlignment="center" textTransform="uppercase" textWrap="true"></Label>
         </Ripple>
-        <ActivityIndicator horizontalAlignment="center" [busy]="processing"></ActivityIndicator>
+
     </StackLayout>
 </FlexboxLayout>

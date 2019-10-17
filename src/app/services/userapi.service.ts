@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BackendService } from '../shared/backend.service';
 import { SqliteService } from '../shared/services/sqlite.service';
 
@@ -44,11 +44,23 @@ export class UserapiService {
     upload(data) {
 
         let json = {
-            badge: data.badge
+            badge: data.badge,
+            cell: BackendService.phoneNumber
         }
         let params = json;
         console.log(params)
         return this.http.post(`${this.server}/savebadge`, json)
+    }
+
+    download(data) {
+        let params = new HttpParams();
+        params = params.append('cell', data.cell);
+        // let json = {
+        //     cell: data.cell
+        // }
+        // let params = json;
+        console.log(params)
+        return this.http.get(`${this.server}/getbadges`, {params: params})
     }
 
     logout() {

@@ -1,7 +1,7 @@
 <FlexboxLayout>
     <StackLayout class="form" [class.dark]="!isLoggingIn" orientation="vertical">
         <Image src="~/images/logo.png"></Image>
-        <InputMask hint="+57 (000) 000-0000" keyboardType="phone" mask="+57 ([000]) [000]-[0000]" class="input input-border" (extractedValueChange)=onExtractedValueChange($event) [isEnabled]="!processing">
+        <InputMask hint="+57 (300) 123-4567" keyboardType="phone" mask="+57 ([000]) [000]-[0000]" class="input input-border" (extractedValueChange)=onExtractedValueChange($event) [isEnabled]="!processing">
         </InputMask>
 
         <Ripple rippleColor="#f5f5f5" (tap)="submit()" class="btn btn-primary" [isEnabled]="!processing">

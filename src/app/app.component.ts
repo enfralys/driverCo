@@ -10,6 +10,7 @@ import { BackendService } from "./shared/backend.service";
 import * as Connectivity from "tns-core-modules/connectivity";
 import { UserapiService } from "./services/userapi.service";
 import { TNSFancyAlert } from "nativescript-fancyalert";
+import { empty } from "rxjs";
 
 @Component({
     moduleId: module.id,
@@ -43,7 +44,7 @@ export class AppComponent implements OnInit {
             }
             console.log("Funcionando...")
         }, 30000);
-
+        BackendService.upload = false;
     }
 
     ngOnInit(): void {
@@ -58,6 +59,7 @@ export class AppComponent implements OnInit {
         setInterval(() => {
             this.loadBadges()
         }, 10000);
+
     }
 
     async loadBadges() {
@@ -121,6 +123,7 @@ export class AppComponent implements OnInit {
                 res => {
                     if (res) {
                         console.log(JSON.stringify(res));
+                        BackendService.upload = false;
                     }
                 },
                 err => {
@@ -129,8 +132,8 @@ export class AppComponent implements OnInit {
                         "¡Ha ocurrido un problema!",
                         "No se ha podido sincronizar"
                     );
+                    BackendService.upload = false;
                 })
-            BackendService.upload = false;
             console.log("Estado posterior a la subida: ", BackendService.upload)
         }
     }

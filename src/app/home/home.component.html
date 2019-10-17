@@ -15,26 +15,21 @@
     <Label class="action-bar-title" text="Noticias"></Label>
 </ActionBar>
 <StackLayout class="page">
-    <Label text="Prueba"></Label>
-
-    <RadListView id="list-view" [items]="news" marginRight="-2" separatorColor="transparent" height="100%">
-        <ng-template tkListItemTemplate let-item="item">
-            <StackLayout>
-                <GridLayout rows="*" backgroundColor="White">
-                    <GridLayout rows="*" columns="*">
-                        <Image src="{{ item.urlToImage }}" stretch="aspectFill" height="200"></Image>
-                        <GridLayout verticalAlignment="top">
-                            <StackLayout backgroundColor="#bc3b4e77">
-                                <Label text="{{ item.source.name }}" class="news-source"></Label>
-                            </StackLayout>
+    <ScrollView>
+        <StackLayout>
+            <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3">
+                <StackLayout class="card-layout">
+                    <GridLayout rows="*">
+                        <GridLayout rows="*" columns="*">
+                            <Image src="https://s4.reutersmedia.net/resources/r/?m=02&d=20191017&t=2&i=1441673580&r=LYNXMPEF9G00M-OUSLT&w=1200" stretch="aspectFill" height="200"></Image>
                         </GridLayout>
                     </GridLayout>
-                </GridLayout>
-                <StackLayout paddingTop="15" paddingBottom="20" paddingLeft="15" paddingRight="15" backgroundColor="White">
-                    <Label text="{{ item.title }}" class="news-title" textWrap="true"></Label>
+                    <StackLayout paddingTop="15" paddingBottom="20" paddingLeft="15" paddingRight="15" backgroundColor="White">
+                        <Label text="Título de la noticia" class="news-title" textWrap="true"></Label>
+                    </StackLayout>
                 </StackLayout>
-            </StackLayout>
-        </ng-template>
-    </RadListView>
+            </CardView>
+        </StackLayout>
+    </ScrollView>
 
 </StackLayout>

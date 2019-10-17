@@ -36,6 +36,7 @@
         "nativescript-ripple": "^2.2.1",
         "nativescript-sqlite": "^2.3.3",
         "nativescript-theme-core": "~1.0.4",
+        "nativescript-ui-listview": "^7.1.0",
         "nativescript-ui-sidedrawer": "7.0.0",
         "reflect-metadata": "~0.1.12",
         "rxjs": "~6.3.0",
