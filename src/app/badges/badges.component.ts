@@ -8,6 +8,7 @@ import { UserapiService } from "../services/userapi.service";
 
 import { registerElement } from "nativescript-angular/element-registry";
 import { CardView } from "@nstudio/nativescript-cardview";
+import { BackendService } from "../shared";
 
 //SQLite library
 var Sqlite = require("nativescript-sqlite");
@@ -42,6 +43,11 @@ export class BadgesComponent implements OnInit {
         console.log(obj);
     }
 
+
+    test(){
+        console.log("only a test");
+        BackendService.upload = true;
+    }
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();

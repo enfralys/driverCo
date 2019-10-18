@@ -2,6 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { isIOS } from "tns-core-modules/platform";
 import { ObservableArray } from "tns-core-modules/data/observable-array";
 import { isAndroid } from "tns-core-modules/platform";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import * as app from "tns-core-modules/application";
+
+
 
 declare const IQKeyboardManager: any;
 
@@ -53,4 +57,10 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void { }
+
+    onDrawerButtonTap(): void {
+        const sideDrawer = <RadSideDrawer>app.getRootView();
+        sideDrawer.showDrawer();
+    }
+
 }
