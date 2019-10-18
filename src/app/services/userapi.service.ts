@@ -7,9 +7,12 @@ import { SqliteService } from '../shared/services/sqlite.service';
     providedIn: 'root'
 })
 export class UserapiService {
-    constructor(private http: HttpClient, private database: SqliteService) { }
+
     obDetail;
-    server = "http://138.68.31.167:5000"
+    server = "http://138.68.31.167:5000";
+
+    constructor(private http: HttpClient, private database: SqliteService) { }
+
 
     getobDetail() {
         let object = this.obDetail;
@@ -55,10 +58,6 @@ export class UserapiService {
     download(data) {
         let params = new HttpParams();
         params = params.append('cell', data.cell);
-        // let json = {
-        //     cell: data.cell
-        // }
-        // let params = json;
         console.log(params)
         return this.http.get(`${this.server}/getbadges`, {params: params})
     }
