@@ -30,7 +30,7 @@ export class CheckComponent implements OnInit {
     }
     token;
     phoneNumber = BackendService.phoneNumber;
-    countdown = 15;
+    countdown = 120;
     fails = 0;
     isLoggingIn = true;
     processing = false;
@@ -177,7 +177,7 @@ export class CheckComponent implements OnInit {
                 "¡Mensaje Reenviado!",
                 "El código ha sido reenviado de manera exitosa."
             );
-            this.countdown = 15;
+            this.countdown = 120;
             this.fails = this.fails + 1;
             console.log(this.fails)
 

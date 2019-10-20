@@ -156,9 +156,4 @@ export class AppComponent implements OnInit {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.closeDrawer();
     }
-
-    logout() {
-        this.userService.logout();
-        this.routerExtensions.navigate(["/login"]);
-    }
 }

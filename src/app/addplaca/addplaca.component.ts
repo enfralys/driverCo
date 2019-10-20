@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { TNSFancyAlert } from 'nativescript-fancyalert';
+import { BackendService } from '../shared/backend.service';
 import { EventData } from "tns-core-modules/data/observable";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
-import { TNSFancyAlert } from 'nativescript-fancyalert';
-
+import { RouterExtensions } from "nativescript-angular/router";
 import { SqliteService } from "../shared/services/sqlite.service";
-import { BackendService } from '../shared/backend.service';
 
 @Component({
     selector: 'addplaca',
@@ -33,7 +32,7 @@ export class AddplacaComponent implements OnInit {
     db: any;
     badges: Array<any>;
 
-    constructor(private router: Router, private database: SqliteService) {
+    constructor(private router: RouterExtensions, private database: SqliteService) {
 
     }
 
@@ -108,7 +107,7 @@ export class AddplacaComponent implements OnInit {
     }
 
     mask(args) {
-        console.log('Valor: ',args.value)
+        console.log('Valor: ', args.value)
         console.log('Placa: ', this.badge)
         console.log('Longitud: ', args.value.length)
         if (args.value.length === 6 && !args.value.includes('-') && !args.value.includes(' ')) {
@@ -123,7 +122,15 @@ export class AddplacaComponent implements OnInit {
     }
 
     onDrawerButtonTap() {
-        this.router.navigateByUrl('/badges')
+        this.router.navigate(['badges'],
+            {
+                animated: true,
+                transition: {
+                    name: "slideBottom",
+                    duration: 380,
+                    curve: "easeIn"
+                }
+            });
     }
 
     submit() {
@@ -148,7 +155,15 @@ export class AddplacaComponent implements OnInit {
                             "Sus datos fueron guardados"
                         );
                         this.processing = false;
-                        this.router.navigateByUrl('/badges')
+                        this.router.navigate(['badges'],
+                            {
+                                animated: true,
+                                transition: {
+                                    name: "slideBottom",
+                                    duration: 380,
+                                    curve: "easeIn"
+                                }
+                            });
                         BackendService.upload = true;
                     }, err => {
                         this.processing = false;

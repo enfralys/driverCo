@@ -10,6 +10,7 @@ const routes: Routes = [
     { path: "badges", loadChildren: "~/app/badges/badges.module#BadgesModule"},
 
     { path: "home", loadChildren: "~/app/home/home.module#HomeModule" },
+    { path: "notices", loadChildren: "~/app/home/notices/notices.module#NoticesModule" },
     { path: "browse", loadChildren: "~/app/browse/browse.module#BrowseModule" },
     { path: "search", loadChildren: "~/app/search/search.module#SearchModule" },
     { path: "featured", loadChildren: "~/app/featured/featured.module#FeaturedModule" },

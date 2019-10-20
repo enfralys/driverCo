@@ -2,15 +2,14 @@ import { NgModule } from "@angular/core";
 import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 
-import { HomeComponent } from "./home.component";
-import { NoticesComponent } from "./notices/notices.component";
+import { NoticesComponent } from "./notices.component";
 
 const routes: Routes = [
-    { path: "", component: HomeComponent },
+    { path: "", component: NoticesComponent }
 ];
 
 @NgModule({
     imports: [NativeScriptRouterModule.forChild(routes)],
     exports: [NativeScriptRouterModule]
 })
-export class HomeRoutingModule { }
+export class NoticesRoutingModule { }
