@@ -14,7 +14,7 @@ action-bar {
 
 StackLayout {
     width: 300;
-    height: 50%;
+    height: 60%;
     padding: 10 16;
     background-color: #f0f0f0
 }

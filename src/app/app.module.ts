@@ -12,33 +12,31 @@ import { HttpClientModule } from "@angular/common/http";
 import { RegisterComponent } from './register/register.component';
 
 import { InputMaskModule } from 'nativescript-input-mask/angular';
-import { InternetConnectionService } from "./shared/services/internet-connection.service";
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 @NgModule({
     bootstrap: [
         AppComponent,
     ],
     imports: [
+        InputMaskModule,
         HttpClientModule,
         AppRoutingModule,
         NativeScriptModule,
         NativeScriptFormsModule,
         NativeScriptRouterModule,
+        NativeScriptUIListViewModule,
         NativeScriptUISideDrawerModule,
         NativeScriptDateTimePickerModule,
-        InputMaskModule,
     ],
     declarations: [
         AppComponent,
-        // LoginComponent,
-        // AddplacaComponent,
         RegisterComponent,
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ],
     providers: [
-        InternetConnectionService,
         DatePipe
     ]
 })

@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
         if (BackendService.token !== undefined) {
             this.router.navigateByUrl('home')
         }
+        console.log("Token actual: ",BackendService.token)
     }
 
     onExtractedValueChange(args) {

@@ -7,6 +7,7 @@ import * as firebase from 'nativescript-plugin-firebase';
 import { BackendService } from '~/app/shared/backend.service';
 
 import { UserapiService } from '../../services/userapi.service';
+import { SqliteService } from '~/app/shared/services/sqlite.service';
 
 
 @Component({
@@ -33,8 +34,10 @@ export class CheckComponent implements OnInit {
     fails = 0;
     isLoggingIn = true;
     processing = false;
+    db: any;
+    badges: Array<any>;
 
-    constructor(private router: Router, private page: Page, private userService: UserapiService) {
+    constructor(private router: Router, private page: Page, private database: SqliteService, private userService: UserapiService) {
         this.page.actionBarHidden = true;
     }
 
@@ -56,10 +59,72 @@ export class CheckComponent implements OnInit {
         }
     }
 
+    async DownloadInfo() {
+        console.log(BackendService.phoneNumber)
+
+        let data = {
+            cell: BackendService.phoneNumber
+        }
+
+        this.userService.download(data).subscribe(
+            res => {
+                let response: any = res;
+
+                if (response) {
+                    if (response !== 'empty') {
+                        response.data.forEach(element => {
+                            console.log(element.badge)
+                            this.database.getdbConnection()
+                                .then(db => {
+                                    db.execSQL("INSERT INTO badges (badge, city, soat_exp_date, tecmec_exp_date, license_exp_date, next_oil_change) VALUES (?, ?, ?, ?, ?, ?)", [element.badge, element.city, element.soat_exp_date, element.tecmec_exp_date, element.license_exp_date, element.next_oil_change]).then(id => {
+                                        console.log("INSERT RESULT", id);
+                                        this.loadBadges();
+                                    }, err => {
+                                        console.log("INSERT ERROR", err);
+
+                                    });
+                                });
+                        });
+                        console.log('Cargando DB local');
+                    } else {
+                        console.log('No hay datos');
+                    }
+                }
+            },
+            err => {
+                console.log(err);
+            })
+    }
+
+    async loadBadges() {
+        this.badges = [];
+        this.database.getdbConnection()
+            .then(db => {
+                db.all("SELECT * FROM badges").then(rows => {
+                    if (rows.length > 0) {
+                        for (var row in rows) {
+                            this.badges.push({
+                                "badge": rows[row][1],
+                                "city": rows[row][2],
+                                "soat_exp_date": rows[row][3],
+                                "tecmec_exp_date": rows[row][4],
+                                "license_exp_date": rows[row][5],
+                                "next_oil_change": rows[row][6]
+                            });
+                        }
+                        this.db = db;
+                    }
+                }, error => {
+                    console.log("SELECT ERROR", error);
+                });
+            });
+    }
+
     async settoken() {
         await firebase.getCurrentPushToken().then(res => this.token = res);
         console.log(this.token)
     }
+
     async onExtractedValueChange(args) {
 
         // `args.value` includes only extracted characters, for instance
@@ -85,6 +150,7 @@ export class CheckComponent implements OnInit {
                         if (res) {
                             BackendService.token = this.token;
                             this.processing = false;
+                            this.DownloadInfo();
                             this.router.navigateByUrl('home');
                             console.log(JSON.stringify(res));
                             console.log("Token actual: ", BackendService.token);
