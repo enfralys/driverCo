@@ -144,10 +144,6 @@ export class AppComponent implements OnInit {
                 },
                 err => {
                     console.log(err)
-                    TNSFancyAlert.showError(
-                        "¡Ha ocurrido un problema!",
-                        "No se ha podido sincronizar"
-                    );
                     BackendService.upload = false;
                 })
             console.log("Estado posterior a la subida: ", BackendService.upload)

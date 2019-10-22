@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewContainerRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import * as fs from "tns-core-modules/file-system";
@@ -10,11 +10,16 @@ import { RouterExtensions } from "nativescript-angular/router/router.module";
 import * as imagepicker from "nativescript-imagepicker";
 import { isIOS } from "tns-core-modules/ui/page/page";
 import * as bgHttp from "nativescript-background-http";
+import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
+
+import { ModalComponent } from "./modal/modal.component";
+
 registerElement("CardView", () => CardView);
 
 @Component({
     selector: "Featured",
     moduleId: module.id,
+    providers: [ModalDialogService],
     templateUrl: "./featured.component.html",
     styleUrls: ['./featured.component.css']
 })
@@ -35,7 +40,10 @@ export class FeaturedComponent implements OnInit {
     license_exp_date;
     next_oil_change;
 
-    constructor(private userapi: UserapiService, private datePipe: DatePipe, private router: RouterExtensions) {
+    constructor(private userapi: UserapiService, private datePipe: DatePipe,
+        private router: RouterExtensions,
+        private modalService: ModalDialogService,
+        private viewContainerRef: ViewContainerRef) {
         // Use the component constructor to inject providers.
         this.session = bgHttp.session("image-upload");
     }
@@ -75,12 +83,18 @@ export class FeaturedComponent implements OnInit {
         this.getdetail();
     }
     public onSelectSingleTap() {
-        this.isSingleMode = true;
+        const options: ModalDialogOptions = {
+            viewContainerRef: this.viewContainerRef,
+            fullscreen: false,
+            context: {}
+        };
+        this.modalService.showModal(ModalComponent, options);
+        // this.isSingleMode = true;
 
-        let context = imagepicker.create({
-            mode: "single"
-        });
-        this.startSelection(context);
+        // let context = imagepicker.create({
+        //     mode: "single"
+        // });
+        // this.startSelection(context);
     }
 
     private startSelection(context) {
@@ -90,7 +104,7 @@ export class FeaturedComponent implements OnInit {
                 return context.present();
             })
             .then((selection) => {
-              
+
                 // this.resetEventLog();
 
                 console.log("Selection done: " + JSON.stringify(selection));
@@ -191,8 +205,8 @@ export class FeaturedComponent implements OnInit {
                    // resolve(tempFilePath);
                // });
                } catch (error) {
-                   
-               } 
+
+               }
                 // <---- Native API implementation
             } else { // return imageAsset.android, since it's the path of the file
                 resolve(imageAsset.android);
@@ -200,5 +214,5 @@ export class FeaturedComponent implements OnInit {
         });
     }
 
-    
+
 }
