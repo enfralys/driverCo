@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BackendService } from '../shared/backend.service';
-import { SqliteService } from '../shared/services/sqlite.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +10,7 @@ export class UserapiService {
     obDetail;
     server = "http://138.68.31.167:5000";
 
-    constructor(private http: HttpClient, private database: SqliteService) { }
+    constructor(private http: HttpClient) { }
 
 
     getobDetail() {
@@ -62,9 +61,7 @@ export class UserapiService {
         return this.http.get(`${this.server}/getbadges`, {params: params})
     }
 
-    logout() {
-        BackendService.token = "";
-        this.database.closedbConnection();
+    getNews() {
+        return this.http.get(`${this.server}/news`)
     }
-
 }

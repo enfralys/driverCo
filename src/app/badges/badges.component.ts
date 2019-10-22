@@ -9,6 +9,7 @@ import { UserapiService } from "../services/userapi.service";
 import { registerElement } from "nativescript-angular/element-registry";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { BackendService } from "../shared";
+import { RouterExtensions } from "nativescript-angular/router";
 
 //SQLite library
 var Sqlite = require("nativescript-sqlite");
@@ -29,7 +30,7 @@ export class BadgesComponent implements OnInit {
     badges: Array<any>;
 
 
-    constructor(private _page: Page, private userapi: UserapiService, private database: SqliteService) {
+    constructor(private _page: Page, private userapi: UserapiService, private database: SqliteService, private router: RouterExtensions) {
         // Use the component constructor to inject providers.
     }
 
@@ -40,7 +41,15 @@ export class BadgesComponent implements OnInit {
 
     setdetail(obj) {
         this.userapi.setobDetail(obj);
-        console.log(obj);
+        this.router.navigate(['featured'],
+            {
+                animated: true,
+                transition: {
+                    name: "slide",
+                    duration: 380,
+                    curve: "easeIn"
+                }
+            });
     }
 
 
@@ -75,6 +84,18 @@ export class BadgesComponent implements OnInit {
                 }, error => {
                     console.log("SELECT ERROR", error);
                 });
+            });
+    }
+
+    addBadge() {
+        this.router.navigate(['addplaca'],
+            {
+                animated: true,
+                transition: {
+                    name: "slideTop",
+                    duration: 380,
+                    curve: "easeIn"
+                }
             });
     }
 

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { TNSFancyAlert } from 'nativescript-fancyalert';
+import { BackendService } from '../shared/backend.service';
 import { EventData } from "tns-core-modules/data/observable";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
-import { TNSFancyAlert } from 'nativescript-fancyalert';
-
+import { RouterExtensions } from "nativescript-angular/router";
 import { SqliteService } from "../shared/services/sqlite.service";
-import { BackendService } from '../shared/backend.service';
+import * as imagepicker from "nativescript-imagepicker";
 
 @Component({
     selector: 'addplaca',
@@ -14,7 +14,7 @@ import { BackendService } from '../shared/backend.service';
     moduleId: module.id,
 })
 export class AddplacaComponent implements OnInit {
-
+    server = "http://138.68.31.167:5000";
     //vars
     badge: string = "";
     city;
@@ -33,11 +33,50 @@ export class AddplacaComponent implements OnInit {
     db: any;
     badges: Array<any>;
 
-    constructor(private router: Router, private database: SqliteService) {
+    constructor(private router: RouterExtensions, private database: SqliteService) {
 
     }
 
     ngOnInit() {
+    }
+    imageAssets = [];
+    imageSrc: any;
+    isSingleMode: boolean = true;
+    thumbSize: number = 80;
+    previewSize: number = 300;
+    public onSelectSingleTap() {
+        this.isSingleMode = true;
+
+        let context = imagepicker.create({
+            mode: "single"
+        });
+        this.startSelection(context);
+    }
+
+    private startSelection(context) {
+        let that = this;
+
+        context
+        .authorize()
+        .then(() => {
+            that.imageAssets = [];
+            that.imageSrc = null;
+            return context.present();
+        })
+        .then((selection) => {
+            console.log("Selection done: " + JSON.stringify(selection));
+            that.imageSrc = that.isSingleMode && selection.length > 0 ? selection[0] : null;
+
+            // set the images to be loaded from the assets with optimal sizes (optimize memory usage)
+            selection.forEach(function (element) {
+                element.options.width = that.isSingleMode ? that.previewSize : that.thumbSize;
+                element.options.height = that.isSingleMode ? that.previewSize : that.thumbSize;
+            });
+
+            that.imageAssets = selection;
+        }).catch(function (e) {
+            console.log(e);
+        });
     }
 
     public onSelectedIndexChanged(args: EventData) {
@@ -108,7 +147,7 @@ export class AddplacaComponent implements OnInit {
     }
 
     mask(args) {
-        console.log('Valor: ',args.value)
+        console.log('Valor: ', args.value)
         console.log('Placa: ', this.badge)
         console.log('Longitud: ', args.value.length)
         if (args.value.length === 6 && !args.value.includes('-') && !args.value.includes(' ')) {
@@ -123,7 +162,15 @@ export class AddplacaComponent implements OnInit {
     }
 
     onDrawerButtonTap() {
-        this.router.navigateByUrl('/badges')
+        this.router.navigate(['badges'],
+            {
+                animated: true,
+                transition: {
+                    name: "slideBottom",
+                    duration: 380,
+                    curve: "easeIn"
+                }
+            });
     }
 
     submit() {
@@ -148,7 +195,15 @@ export class AddplacaComponent implements OnInit {
                             "Sus datos fueron guardados"
                         );
                         this.processing = false;
-                        this.router.navigateByUrl('/badges')
+                        this.router.navigate(['badges'],
+                            {
+                                animated: true,
+                                transition: {
+                                    name: "slideBottom",
+                                    duration: 380,
+                                    curve: "easeIn"
+                                }
+                            });
                         BackendService.upload = true;
                     }, err => {
                         this.processing = false;

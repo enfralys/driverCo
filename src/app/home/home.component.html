@@ -1,5 +1,4 @@
 <ActionBar class="action-bar">
-
     <!--
     Use the NavigationButton as a side-drawer button in Android
     because ActionItems are shown on the right side of the ActionBar
@@ -12,26 +11,29 @@
     -->
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
-    <Label class="action-bar-title" text="Noticias"></Label>
+    <Label class="action-bar-title" text="Últimas Noticias"></Label>
 </ActionBar>
 <StackLayout class="page">
     <ScrollView>
 
         
         <StackLayout>
-            <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3">
-                <StackLayout class="card-layout">
-                    <GridLayout rows="*">
-                        <GridLayout rows="*" columns="*">
-                            <Image src="https://s4.reutersmedia.net/resources/r/?m=02&d=20191017&t=2&i=1441673580&r=LYNXMPEF9G00M-OUSLT&w=1200" stretch="aspectFill" height="200"></Image>
-                        </GridLayout>
-                    </GridLayout>
-                    <StackLayout paddingTop="15" paddingBottom="20" paddingLeft="15" paddingRight="15" backgroundColor="White">
-                        <Label text="Título de la noticia" class="news-title" textWrap="true"></Label>
-                    </StackLayout>
-                </StackLayout>
-            </CardView>
+            <ng-container *ngFor="let new of news">
+                <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3" (tap)="setdetail(new)">
+                    <ng-container *ngIf="new.status === 'Activa'">
+                        <StackLayout class="card-layout">
+                            <GridLayout rows="*">
+                                <GridLayout rows="*" columns="*">
+                                    <Image [src]="'http://138.68.31.167:4999' + new.image + '.png'" stretch="aspectFill" height="200"></Image>
+                                </GridLayout>
+                            </GridLayout>
+                            <StackLayout paddingTop="15" paddingBottom="20" paddingLeft="15" paddingRight="15" backgroundColor="White">
+                                <Label [text]="new.tittle" class="news-title" textWrap="true"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </ng-container>
+                </CardView>
+            </ng-container>
         </StackLayout>
     </ScrollView>
-
 </StackLayout>

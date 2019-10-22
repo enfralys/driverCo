@@ -1,9 +1,9 @@
-import { Router } from '@angular/router';
 import { User, BackendService } from '../shared';
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import * as firebase from 'nativescript-plugin-firebase';
 import { UserapiService } from '../services/userapi.service';
+import { RouterExtensions } from "nativescript-angular/router";
 import { TNSFancyAlert, TNSFancyAlertButton } from "nativescript-fancyalert";
 
 @Component({
@@ -18,30 +18,38 @@ export class LoginComponent implements OnInit {
     isLoggingIn = true;
     processing = false;
 
-    constructor(private page: Page, private router: Router, private userService: UserapiService) {
+    constructor(private page: Page, private router: RouterExtensions, private userService: UserapiService) {
         this.page.actionBarHidden = true;
         this.user = new User();
         this.user.number = "";
         this.user.name = "";
-        if (BackendService.token !== undefined) {
-            this.router.navigateByUrl('home')
+        if (BackendService.token !== "") {
+            this.router.navigate(['home',],
+                {
+                    animated: true,
+                    transition: {
+                        name: "slide",
+                        duration: 380,
+                        curve: "easeIn"
+                    }
+                });
         }
-        console.log("Token actual: ",BackendService.token)
+        console.log("Token actual: ", BackendService.token)
     }
 
     onExtractedValueChange(args) {
         // `args.value` includes only extracted characters, for instance
         // `1235551111` would be logged while the UI would display `(123) 555-1111`.
         this.user.number = args.value;
-        console.log('Extracted value:', args.value);
-        console.log('Número en variable: ', this.user.number)
+        // console.log('Extracted value:', args.value);
+        // console.log('Número en variable: ', this.user.number)
     }
 
     ngOnInit() {
 
     }
 
-    async submit(){
+    async submit() {
 
         this.processing = true;
         // await firebase.getCurrentPushToken().then(res => BackendService.token = res);
@@ -67,7 +75,15 @@ export class LoginComponent implements OnInit {
                         BackendService.phoneNumber = this.user.number;
                         BackendService.code = response.code;
                         this.processing = false;
-                        this.router.navigate(['login-check',])
+                        this.router.navigate(['login-check',],
+                            {
+                                animated: true,
+                                transition: {
+                                    name: "slide",
+                                    duration: 380,
+                                    curve: "easeIn"
+                                }
+                            });
                     } else {
                         TNSFancyAlert.showError(
                             "¡Ha ocurrido un problema!",

@@ -1,0 +1,32 @@
+<ActionBar class="action-bar">
+    <!--
+
+        Use the NavigationButton as a side-drawer button in Android
+        because ActionItems are shown on the right side of the ActionBar
+        -->
+    <NavigationButton ios:visibility="collapsed" android.systemIcon="ic_menu_revert" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!--
+        Use the ActionItem for IOS with position set to left. Using the
+        NavigationButton as a side-drawer button in iOS is not possible,
+        because its function is to always navigate back in the application.
+        -->
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" text="Últimas Noticias"></Label>
+</ActionBar>
+<GridLayout class="page">
+    <ScrollView #scrollView (scroll)="onScroll($event, scrollView, topView)">
+        <StackLayout>
+            <StackLayout #topView height="250">
+                <Image [src]="'http://138.68.31.167:4999' + new.image + '.png'" loadMode="async" stretch="aspectFill" height="250"></Image>
+                <!-- this is the header for collapsing --->
+                <!-- Note: this can be any type of layout you want -->
+            </StackLayout>
+            <StackLayout width="100%" backgroundColor="white" padding="10">
+                <!--Add your page content here-->
+                <Label textWrap="true" [text]="new.tittle" class="h2 description-label"></Label>
+                <Label textWrap="true" class="p-10" [text]="new.content"></Label>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</GridLayout>

@@ -34,9 +34,10 @@
             <DockLayout width="100%" row="1" stretchLastChild="true">
                 <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="soat($event)" [isEnabled]="!processing"></DatePickerField>
                 <StackLayout orientation="vertical">
-                    <Ripple rippleColor="#f5f5f5" class="btn-file" borderRadius="5" height="40" width="40">
-                        <Label text="&#xf0c6;" fontSize="30" horizontalAlignment="center" color="#fff" class="fa" textWrap="true"></Label>
+                    <Ripple rippleColor="#f5f5f5" class="btn-file" borderRadius="5" (tap)="onSelectSingleTap()" height="40" width="40">
+                        <Label  text="&#xf0c6;" fontSize="30" horizontalAlignment="center" color="#fff" class="fa" textWrap="true"></Label>
                     </Ripple>
+
                 </StackLayout>
             </DockLayout>
         </GridLayout>
@@ -45,7 +46,7 @@
             <DockLayout width="100%" row="1" stretchLastChild="true">
                 <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="tecnoMech($event)" [isEnabled]="!processing"></DatePickerField>
                 <StackLayout orientation="vertical">
-                    <Ripple rippleColor="#f5f5f5" class="btn-file" borderRadius="5" height="40" width="40">
+                    <Ripple rippleColor="#f5f5f5"   (tap)="onSelectSingleTap()" class="btn-file" borderRadius="5" height="40" width="40">
                         <Label text="&#xf0c6;" fontSize="30" horizontalAlignment="center" color="#fff" class="fa" textWrap="true"></Label>
                     </Ripple>
                 </StackLayout>
@@ -56,7 +57,7 @@
             <DockLayout width="100%" row="1" stretchLastChild="true">
                 <DatePickerField dock="left" width="auto" hint="Seleccione fecha de vencimiento" (dateChange)="license($event)" [isEnabled]="!processing"></DatePickerField>
                 <StackLayout orientation="vertical">
-                    <Ripple rippleColor="#f5f5f5" class="btn-file" borderRadius="5" height="40" width="40">
+                    <Ripple rippleColor="#f5f5f5"  (tap)="onSelectSingleTap()" class="btn-file" borderRadius="5" height="40" width="40">
                         <Label text="&#xf0c6;" fontSize="30" horizontalAlignment="center" color="#fff" class="fa" textWrap="true"></Label>
                     </Ripple>
                 </StackLayout>

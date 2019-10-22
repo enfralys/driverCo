@@ -4,13 +4,12 @@ import * as app from "tns-core-modules/application";
 import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
-
 import { SqliteService } from "./shared/services/sqlite.service";
 import { BackendService } from "./shared/backend.service";
 import * as Connectivity from "tns-core-modules/connectivity";
 import { UserapiService } from "./services/userapi.service";
 import { TNSFancyAlert } from "nativescript-fancyalert";
-import { empty } from "rxjs";
+import * as firebase from 'nativescript-plugin-firebase';
 
 @Component({
     moduleId: module.id,
@@ -22,12 +21,17 @@ export class AppComponent implements OnInit {
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;
     public connectionType: string;
-
+    imageAssets = [];
+    imageSrc: any;
+    isSingleMode: boolean = true;
+    thumbSize: number = 80;
+    previewSize: number = 300;
     db: any;
     badges: Array<any>;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions, private database: SqliteService, private zone: NgZone, private userService: UserapiService) {
         // Use the component constructor to inject services.
+        
         this.database.getdbConnection()
             .then(db => {
                 db.execSQL("CREATE TABLE IF NOT EXISTS badges ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , badge TEXT NOT NULL , city TEXT NOT NULL, soat_exp_date NUMERIC, tecmec_exp_date NUMERIC, license_exp_date NUMERIC, next_oil_change NUMERIC)").then(() => {
@@ -60,6 +64,16 @@ export class AppComponent implements OnInit {
             this.loadBadges()
         }, 10000);
 
+    }
+    logOut(){
+        console.log(BackendService.token);
+        BackendService.token = "";    
+        console.log(BackendService.token,"mamadas");
+        this.routerExtensions.navigate(['/login'], {
+            transition: {
+                name: "fade"
+            }
+        });
     }
 
     async loadBadges() {
@@ -147,7 +161,7 @@ export class AppComponent implements OnInit {
     isComponentSelected(url: string): boolean {
         return this._activatedUrl === url;
     }
-
+    
     onNavItemTap(navItemRoute: string): void {
         this.routerExtensions.navigate([navItemRoute], {
             transition: {
@@ -157,10 +171,5 @@ export class AppComponent implements OnInit {
 
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.closeDrawer();
-    }
-
-    logout() {
-        this.userService.logout();
-        this.routerExtensions.navigate(["/login"]);
     }
 }
