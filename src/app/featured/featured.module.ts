@@ -3,6 +3,7 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 
 import { FeaturedRoutingModule } from "./featured-routing.module";
 import { FeaturedComponent } from "./featured.component";
+import { ModalComponent } from "./modal/modal.component";
 
 @NgModule({
     imports: [
@@ -10,10 +11,14 @@ import { FeaturedComponent } from "./featured.component";
         FeaturedRoutingModule
     ],
     declarations: [
-        FeaturedComponent
+        FeaturedComponent,
+        ModalComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
+    ],
+    entryComponents: [
+        ModalComponent
     ]
 })
 export class FeaturedModule { }

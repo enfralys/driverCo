@@ -4,7 +4,8 @@ import { Page } from 'tns-core-modules/ui/page/page';
 import * as firebase from 'nativescript-plugin-firebase';
 import { UserapiService } from '../services/userapi.service';
 import { RouterExtensions } from "nativescript-angular/router";
-import { TNSFancyAlert, TNSFancyAlertButton } from "nativescript-fancyalert";
+import { TNSFancyAlert} from "nativescript-fancyalert";
+import { alert } from "tns-core-modules/ui/dialogs";
 
 @Component({
     selector: 'ns-login',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
         this.user = new User();
         this.user.number = "";
         this.user.name = "";
-        if (BackendService.token !== "") {
+        if (BackendService.token !== "" && BackendService.token !== undefined) {
             this.router.navigate(['home',],
                 {
                     animated: true,

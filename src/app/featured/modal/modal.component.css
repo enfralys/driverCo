@@ -1,1 +1,6 @@
 /* Add mobile styles for the component here.  */
+
+Stacklayout {
+    padding: 10;
+    margin: 10;
+}

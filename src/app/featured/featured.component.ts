@@ -82,7 +82,8 @@ export class FeaturedComponent implements OnInit {
         // Init your component properties here.
         this.getdetail();
     }
-    public onSelectSingleTap() {
+
+    onSelectSingleTap() {
         const options: ModalDialogOptions = {
             viewContainerRef: this.viewContainerRef,
             fullscreen: false,
