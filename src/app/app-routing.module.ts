@@ -3,11 +3,12 @@ import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/login", pathMatch: "full" },
+    { path: "", redirectTo: "/chat", pathMatch: "full" },
     { path: "login", loadChildren: "~/app/login/login.module#LoginModule" },
     { path: "login-check", loadChildren: "~/app/login/check/check.module#CheckModule" },
     { path: "addplaca", loadChildren: "~/app/addplaca/addplaca.module#AddplacaModule"},
     { path: "badges", loadChildren: "~/app/badges/badges.module#BadgesModule"},
+    { path: "chat", loadChildren: "~/app/chat/chat.module#ChatModule"},
 
     { path: "home", loadChildren: "~/app/home/home.module#HomeModule" },
     { path: "notices", loadChildren: "~/app/home/notices/notices.module#NoticesModule" },

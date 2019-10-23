@@ -39,15 +39,25 @@ export class FeaturedComponent implements OnInit {
     tecmec_exp_date;
     license_exp_date;
     next_oil_change;
+ a = {
+badge: "DRU-523",
+city: "Bogota",
+soat_exp_date: "2020-1-12",
+tecmec_exp_date: "2020-7-21",
+license_exp_date: "2020-8-02",
+next_oil_change: "2019-12-01",
+soat_img: null,
+tecmec_img: null,
+license_img: null}
 
-    constructor(private userapi: UserapiService, private datePipe: DatePipe,
+   constructor(private userapi: UserapiService, private datePipe: DatePipe,
         private router: RouterExtensions,
         private modalService: ModalDialogService,
         private viewContainerRef: ViewContainerRef) {
 
         // Use the component constructor to inject providers.
         this.session = bgHttp.session("image-upload");
-
+            
     }
 
     getdetail() {
@@ -85,6 +95,53 @@ export class FeaturedComponent implements OnInit {
         this.getdetail();
     }
 
+   async detect(obj){
+        console.log(this.badge);
+       switch (obj) {
+           case 'soat':
+               if (!this.badge.soat_exp_date) {
+                   return this.setDate(this.badge.soat_exp_date);
+               }
+               if (!this.badge.soat_img) {
+                return this.badge.soat_img=this.setImage();
+               }
+               break;
+       
+               case 'tecno':
+                    if (!this.a.tecmec_exp_date) {
+                        return this.setDate(this.a.tecmec_exp_date);
+                    }
+                    if (!this.badge.tecmec_img) {
+                     return this.setImage();
+                    }
+               break;
+
+               case 'lice':
+                    if (!this.a.license_exp_date) {
+                        return this.setDate(this.a.license_exp_date);
+                    }
+                    if (!this.badge.license_img) {
+                     return this.setImage();
+                    }
+               break;
+           default:
+               break;
+       }
+    }
+
+
+    async setImage(){
+        await alert("test");
+        
+        console.log("aca paso");
+        return  "loca";
+    }
+
+    
+    setDate(a){
+        a = "loca";
+        console.log(this.badge);
+    }
     onSelectSingleTap() {
         const options: ModalDialogOptions = {
             viewContainerRef: this.viewContainerRef,
