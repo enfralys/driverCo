@@ -31,16 +31,17 @@ export class AppComponent implements OnInit {
 
     constructor(private router: Router, private routerExtensions: RouterExtensions, private database: SqliteService, private zone: NgZone, private userService: UserapiService) {
         // Use the component constructor to inject services.
-        
+
         this.database.getdbConnection()
             .then(db => {
-                db.execSQL("CREATE TABLE IF NOT EXISTS badges ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , badge TEXT NOT NULL , city TEXT NOT NULL, soat_exp_date NUMERIC, tecmec_exp_date NUMERIC, license_exp_date NUMERIC, next_oil_change NUMERIC)").then(() => {
+                db.execSQL("CREATE TABLE IF NOT EXISTS badges ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , badge TEXT NOT NULL , city TEXT NOT NULL, soat_exp_date NUMERIC, tecmec_exp_date NUMERIC, license_exp_date NUMERIC, next_oil_change NUMERIC, soat_img TEXT, tecmec_img TEXT, license_img TEXT)").then(() => {
                 }, error => {
                     console.log("CREATE TABLE ERROR", error);
                 });
             }, error => {
                 console.log("OPEN DB ERROR", error);
             });
+
         setInterval(() => {
             this.checkInternet()
             if (BackendService.upload === true) {
@@ -65,10 +66,10 @@ export class AppComponent implements OnInit {
         }, 10000);
 
     }
-    logOut(){
+    logOut() {
         console.log(BackendService.token);
-        BackendService.token = "";    
-        console.log(BackendService.token,"mamadas");
+        BackendService.token = "";
+        console.log(BackendService.token, "mamadas");
         this.routerExtensions.navigate(['/login'], {
             transition: {
                 name: "fade"
@@ -90,7 +91,10 @@ export class AppComponent implements OnInit {
                                 "tecmec_exp_date": rows[row][4],
                                 "license_exp_date": rows[row][5],
                                 "next_oil_change": rows[row][6],
-                                "cell":BackendService.phoneNumber
+                                "soat_img": rows[row][7],
+                                "tecmec_img": rows[row][8],
+                                "license_img": rows[row][9],
+                                "cell": BackendService.phoneNumber
                             });
                         }
                         this.db = db;
@@ -133,7 +137,7 @@ export class AppComponent implements OnInit {
             }
 
             console.log(data)
-            
+
 
             this.userService.upload(data).subscribe(
                 res => {
@@ -157,7 +161,7 @@ export class AppComponent implements OnInit {
     isComponentSelected(url: string): boolean {
         return this._activatedUrl === url;
     }
-    
+
     onNavItemTap(navItemRoute: string): void {
         this.routerExtensions.navigate([navItemRoute], {
             transition: {

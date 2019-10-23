@@ -44,8 +44,10 @@ export class FeaturedComponent implements OnInit {
         private router: RouterExtensions,
         private modalService: ModalDialogService,
         private viewContainerRef: ViewContainerRef) {
+
         // Use the component constructor to inject providers.
         this.session = bgHttp.session("image-upload");
+
     }
 
     getdetail() {
@@ -86,7 +88,7 @@ export class FeaturedComponent implements OnInit {
     onSelectSingleTap() {
         const options: ModalDialogOptions = {
             viewContainerRef: this.viewContainerRef,
-            fullscreen: false,
+            fullscreen: true,
             context: {}
         };
         this.modalService.showModal(ModalComponent, options);

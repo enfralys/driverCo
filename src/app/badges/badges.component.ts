@@ -75,7 +75,10 @@ export class BadgesComponent implements OnInit {
                                 "soat_exp_date": rows[row][3],
                                 "tecmec_exp_date": rows[row][4],
                                 "license_exp_date": rows[row][5],
-                                "next_oil_change": rows[row][6]
+                                "next_oil_change": rows[row][6],
+                                "soat_img": rows[row][7],
+                                "tecmec_img": rows[row][8],
+                                "license_img": rows[row][9],
                             });
                         }
                         this.db = db;
