@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SocketIO } from 'nativescript-socketio';
+import { Component, OnInit,NgZone  } from '@angular/core';
+import { SocketIO } from "nativescript-socketio";
 
 @Component({
   selector: 'ns-chat',
@@ -8,10 +8,24 @@ import { SocketIO } from 'nativescript-socketio';
 })
 export class ChatComponent implements OnInit {
 
-  constructor() { }
-  
-  let  socketIO = new SocketIO(url, opts);
+  constructor( private socketIO: SocketIO,
+    private ngZone: NgZone) {
+    
+   }
+
   ngOnInit() {
+     this.socketIO.on("getDoc", data => {
+      this.ngZone.run(() => {
+    console.log(data);
+      });
+    });
+  }
+  test() {
+    let username ="a3a"
+    console.log('test');
+    this.socketIO.emit('getDoc', {username}, (ack) => {
+      console.log('ack', ack);
+  });
   }
 
 }

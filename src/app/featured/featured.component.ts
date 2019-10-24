@@ -103,7 +103,9 @@ license_img: null}
                    return this.setDate(this.badge.soat_exp_date);
                }
                if (!this.badge.soat_img) {
-                return this.badge.soat_img=this.setImage();
+                   //
+                this.badge.soat_img=this.setImage();
+                console.log(this.badge);
                }
                break;
        

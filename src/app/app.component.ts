@@ -1,5 +1,5 @@
 import { filter } from "rxjs/operators";
-import { Component, OnInit, NgZone } from "@angular/core";
+import { Component, OnInit, NgZone, OnDestroy } from "@angular/core";
 import * as app from "tns-core-modules/application";
 import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -10,6 +10,7 @@ import * as Connectivity from "tns-core-modules/connectivity";
 import { UserapiService } from "./services/userapi.service";
 import { TNSFancyAlert } from "nativescript-fancyalert";
 import * as firebase from 'nativescript-plugin-firebase';
+import { SocketIO } from "nativescript-socketio";
 
 @Component({
     moduleId: module.id,
@@ -17,7 +18,7 @@ import * as firebase from 'nativescript-plugin-firebase';
     templateUrl: "app.component.html"
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy  {
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;
     public connectionType: string;
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
     db: any;
     badges: Array<any>;
 
-    constructor(private router: Router, private routerExtensions: RouterExtensions, private database: SqliteService, private zone: NgZone, private userService: UserapiService) {
+    constructor(private socketIO: SocketIO,private router: Router, private routerExtensions: RouterExtensions, private database: SqliteService, private zone: NgZone, private userService: UserapiService) {
         // Use the component constructor to inject services.
 
         this.database.getdbConnection()
@@ -53,7 +54,10 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        console.log('test');
+       console.log(this.socketIO.connect()); 
+     
+      
         this._activatedUrl = "/home";
         this._sideDrawerTransition = new SlideInOnTopTransition();
 
@@ -66,6 +70,11 @@ export class AppComponent implements OnInit {
         }, 10000);
 
     }
+
+    ngOnDestroy() {
+        this.socketIO.disconnect();
+      }
+
     logOut() {
         console.log(BackendService.token);
         BackendService.token = "";

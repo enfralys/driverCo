@@ -4,6 +4,7 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptDateTimePickerModule } from "nativescript-datetimepicker/angular";
+import { SocketIOModule } from "nativescript-socketio/angular";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -13,7 +14,7 @@ import { RegisterComponent } from './register/register.component';
 
 import { InputMaskModule } from 'nativescript-input-mask/angular';
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
-
+let server = 'http://138.68.31.167:4444';
 @NgModule({
     bootstrap: [
         AppComponent,
@@ -21,6 +22,7 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
     imports: [
         InputMaskModule,
         HttpClientModule,
+        SocketIOModule.forRoot(server),
         AppRoutingModule,
         NativeScriptModule,
         NativeScriptFormsModule,
