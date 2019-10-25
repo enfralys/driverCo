@@ -39,25 +39,26 @@ export class FeaturedComponent implements OnInit {
     tecmec_exp_date;
     license_exp_date;
     next_oil_change;
- a = {
-badge: "DRU-523",
-city: "Bogota",
-soat_exp_date: "2020-1-12",
-tecmec_exp_date: "2020-7-21",
-license_exp_date: "2020-8-02",
-next_oil_change: "2019-12-01",
-soat_img: null,
-tecmec_img: null,
-license_img: null}
+    a = {
+        badge: "DRU-523",
+        city: "Bogota",
+        soat_exp_date: "2020-1-12",
+        tecmec_exp_date: "2020-7-21",
+        license_exp_date: "2020-8-02",
+        next_oil_change: "2019-12-01",
+        soat_img: null,
+        tecmec_img: null,
+        license_img: null
+    }
 
-   constructor(private userapi: UserapiService, private datePipe: DatePipe,
+    constructor(private userapi: UserapiService, private datePipe: DatePipe,
         private router: RouterExtensions,
         private modalService: ModalDialogService,
         private viewContainerRef: ViewContainerRef) {
 
         // Use the component constructor to inject providers.
         this.session = bgHttp.session("image-upload");
-            
+
     }
 
     getdetail() {
@@ -95,55 +96,57 @@ license_img: null}
         this.getdetail();
     }
 
-   async detect(obj){
+    async detect(obj) {
         console.log(this.badge);
-       switch (obj) {
-           case 'soat':
-               if (!this.badge.soat_exp_date) {
-                   return this.setDate(this.badge.soat_exp_date);
-               }
-               if (!this.badge.soat_img) {
-                   //
-                this.badge.soat_img=this.setImage();
-                console.log(this.badge);
-               }
-               break;
-       
-               case 'tecno':
-                    if (!this.a.tecmec_exp_date) {
-                        return this.setDate(this.a.tecmec_exp_date);
-                    }
-                    if (!this.badge.tecmec_img) {
-                     return this.setImage();
-                    }
-               break;
+        switch (obj) {
+            case 'soat':
+                if (!this.badge.soat_exp_date) {
+                    return this.setDate(this.badge.soat_exp_date);
+                }else if (!this.badge.soat_img) {
+                    //
+                    this.badge.soat_img = this.setImage();
+                    console.log(this.badge);
+                } else {
+                    console.log("Se muestra la imagen")
+                }
+                break;
+            case 'tecno':
+                if (!this.a.tecmec_exp_date) {
+                    return this.setDate(this.a.tecmec_exp_date);
+                } else if (!this.badge.tecmec_img) {
+                    return this.setImage();
+                } else {
+                    
+                }
+                break;
 
-               case 'lice':
-                    if (!this.a.license_exp_date) {
-                        return this.setDate(this.a.license_exp_date);
-                    }
-                    if (!this.badge.license_img) {
-                     return this.setImage();
-                    }
-               break;
-           default:
-               break;
-       }
+            case 'lice':
+                if (!this.a.license_exp_date) {
+                    return this.setDate(this.a.license_exp_date);
+                }
+                if (!this.badge.license_img) {
+                    return this.setImage();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 
-    async setImage(){
+    async setImage() {
         await alert("test");
-        
+
         console.log("aca paso");
-        return  "loca";
+        return "loca";
     }
 
-    
-    setDate(a){
+
+    setDate(a) {
         a = "loca";
         console.log(this.badge);
     }
+
     onSelectSingleTap() {
         const options: ModalDialogOptions = {
             viewContainerRef: this.viewContainerRef,
@@ -184,7 +187,7 @@ license_img: null}
     }
     private createNewRequest() {
         const request = {
-            url: this.server +'/test',
+            url: this.server + '/test',
             method: "POST",
             headers: {
                 "Content-Type": " multipart/form-data"
@@ -220,8 +223,8 @@ license_img: null}
         // let task = this.session.multipartUpload(params, request);
         // <----- multipart upload
         console.log(this.session);
-        console.log(file,"file");
-        let params = [{ "name": file.name, "filename": file.path, "mimeType":"image/jpg" }];
+        console.log(file, "file");
+        let params = [{ "name": file.name, "filename": file.path, "mimeType": "image/jpg" }];
 
         let task = this.session.multipartUpload(params, request);
 
@@ -255,20 +258,20 @@ license_img: null}
                 // <---- ImageSource.saveToFile() implementation
 
                 // ----> Native API implementation
-               try {
-              //  const options = PHImageRequestOptions.new();
+                try {
+                    //  const options = PHImageRequestOptions.new();
 
-               // options.synchronous = true;
-                //options.version = PHImageRequestOptionsVersion.Current;
-               // options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat;
+                    // options.synchronous = true;
+                    //options.version = PHImageRequestOptionsVersion.Current;
+                    // options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat;
 
-              //  PHImageManager.defaultManager().requestImageDataForAssetOptionsResultHandler(imageAsset.ios, options, (nsData: NSData) => {
-                  //  nsData.writeToFileAtomically(tempFilePath, true);
-                   // resolve(tempFilePath);
-               // });
-               } catch (error) {
+                    //  PHImageManager.defaultManager().requestImageDataForAssetOptionsResultHandler(imageAsset.ios, options, (nsData: NSData) => {
+                    //  nsData.writeToFileAtomically(tempFilePath, true);
+                    // resolve(tempFilePath);
+                    // });
+                } catch (error) {
 
-               }
+                }
                 // <---- Native API implementation
             } else { // return imageAsset.android, since it's the path of the file
                 resolve(imageAsset.android);
