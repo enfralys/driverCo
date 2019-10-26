@@ -51,7 +51,7 @@ type;
 
         // Use the component constructor to inject providers.
         this.session = bgHttp.session("image-upload");
-            
+
     }
 
     getdetail() {
@@ -141,7 +141,7 @@ type;
        this.sqlite.update(this.badge)
         
         console.log("aca paso");
-        return  "loca";
+        return "loca";
     }
     getMonthFromString(mon) {
         return new Date(Date.parse(mon + " 1, 2019")).getMonth() + 1
@@ -180,6 +180,7 @@ type;
         console.log(this.badge);
         return fullDate;
     }
+
     onSelectSingleTap() {
         const options: ModalDialogOptions = {
             viewContainerRef: this.viewContainerRef,
@@ -220,7 +221,7 @@ type;
     }
     private createNewRequest() {
         const request = {
-            url: this.server +'/test',
+            url: this.server + '/test',
             method: "POST",
             headers: {
                 "Content-Type": " multipart/form-data"
@@ -256,8 +257,8 @@ type;
         // let task = this.session.multipartUpload(params, request);
         // <----- multipart upload
         console.log(this.session);
-        console.log(file,"file");
-        let params = [{ "name": file.name, "filename": file.path, "mimeType":"image/jpg" }];
+        console.log(file, "file");
+        let params = [{ "name": file.name, "filename": file.path, "mimeType": "image/jpg" }];
 
         let task = this.session.multipartUpload(params, request);
 
@@ -317,20 +318,20 @@ type;
                 // <---- ImageSource.saveToFile() implementation
 
                 // ----> Native API implementation
-               try {
-              //  const options = PHImageRequestOptions.new();
+                try {
+                    //  const options = PHImageRequestOptions.new();
 
-               // options.synchronous = true;
-                //options.version = PHImageRequestOptionsVersion.Current;
-               // options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat;
+                    // options.synchronous = true;
+                    //options.version = PHImageRequestOptionsVersion.Current;
+                    // options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat;
 
-              //  PHImageManager.defaultManager().requestImageDataForAssetOptionsResultHandler(imageAsset.ios, options, (nsData: NSData) => {
-                  //  nsData.writeToFileAtomically(tempFilePath, true);
-                   // resolve(tempFilePath);
-               // });
-               } catch (error) {
+                    //  PHImageManager.defaultManager().requestImageDataForAssetOptionsResultHandler(imageAsset.ios, options, (nsData: NSData) => {
+                    //  nsData.writeToFileAtomically(tempFilePath, true);
+                    // resolve(tempFilePath);
+                    // });
+                } catch (error) {
 
-               }
+                }
                 // <---- Native API implementation
             } else { // return imageAsset.android, since it's the path of the file
                 resolve(imageAsset.android);
