@@ -48,8 +48,8 @@
 
     <StackLayout #chatbox height="10%">
         <GridLayout columns="*,auto" style="padding: 10">
-            <TextField #textfield class="chatTextField" row="0" col="0" [(ngModel)]="message"></TextField>
-            <Button #btn class="chatBtn" row="0" col="1" text="send" (tap)=chat(message)></Button>
+            <TextField (textChange)="onTextChange($event)" (returnPress)="onReturn($event)"  #textfield class="chatTextField" row="0" col="0" [(ngModel)]="mensaje "></TextField>
+            <Button #btn class="chatBtn" row="0" col="1" text="send" (tap)=sendMessage()></Button>
         </GridLayout>
     </StackLayout>
 </StackLayout>

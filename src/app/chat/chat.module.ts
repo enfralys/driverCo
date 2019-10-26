@@ -3,11 +3,12 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 
 import { ChatRoutingModule } from "./chat-routing.module";
 import { ChatComponent } from "./chat.component";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        ChatRoutingModule
+        ChatRoutingModule,NativeScriptFormsModule
     ],
     declarations: [
         ChatComponent

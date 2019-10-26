@@ -217,7 +217,7 @@ export class AddplacaComponent implements OnInit {
         } else {
             TNSFancyAlert.showWarning(
                 "¡Atención!",
-                "La placa no es válida"
+                "La placa no es válidaa"
             );
             this.processing = false;
         }

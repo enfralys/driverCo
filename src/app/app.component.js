@@ -1,24 +1,183 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var router_2 = require("nativescript-angular/router");
-var nativescript_ui_sidedrawer_1 = require("nativescript-ui-sidedrawer");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+exports.__esModule = true;
 var operators_1 = require("rxjs/operators");
+var core_1 = require("@angular/core");
 var app = require("tns-core-modules/application");
+var router_1 = require("@angular/router");
+var nativescript_ui_sidedrawer_1 = require("nativescript-ui-sidedrawer");
+var backend_service_1 = require("./shared/backend.service");
+var Connectivity = require("tns-core-modules/connectivity");
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router, routerExtensions) {
+    function AppComponent(socketIO, router, routerExtensions, database, zone, userService) {
+        // Use the component constructor to inject services.
+        var _this = this;
+        this.socketIO = socketIO;
         this.router = router;
         this.routerExtensions = routerExtensions;
-        // Use the component constructor to inject services.
+        this.database = database;
+        this.zone = zone;
+        this.userService = userService;
+        this.imageAssets = [];
+        this.isSingleMode = true;
+        this.thumbSize = 80;
+        this.previewSize = 300;
+        this.database.getdbConnection()
+            .then(function (db) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS badges ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , badge TEXT NOT NULL , city TEXT NOT NULL, soat_exp_date NUMERIC, tecmec_exp_date NUMERIC, license_exp_date NUMERIC, next_oil_change NUMERIC, soat_img TEXT, tecmec_img TEXT, license_img TEXT)").then(function () {
+            }, function (error) {
+                console.log("CREATE TABLE ERROR", error);
+            });
+        }, function (error) {
+            console.log("OPEN DB ERROR", error);
+        });
+        setInterval(function () {
+            _this.checkInternet();
+            if (backend_service_1.BackendService.upload === true) {
+                _this.loadBadges();
+            }
+            console.log("Funcionando...");
+        }, 30000);
+        backend_service_1.BackendService.upload = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
+        console.log('test');
+        console.log(this.socketIO.connect());
         this._activatedUrl = "/home";
         this._sideDrawerTransition = new nativescript_ui_sidedrawer_1.SlideInOnTopTransition();
         this.router.events
             .pipe(operators_1.filter(function (event) { return event instanceof router_1.NavigationEnd; }))
             .subscribe(function (event) { return _this._activatedUrl = event.urlAfterRedirects; });
+        setInterval(function () {
+            _this.loadBadges();
+        }, 10000);
+    };
+    AppComponent.prototype.ngOnDestroy = function () {
+        this.socketIO.disconnect();
+    };
+    AppComponent.prototype.logOut = function () {
+        console.log(backend_service_1.BackendService.token);
+        backend_service_1.BackendService.token = "";
+        console.log(backend_service_1.BackendService.token, "mamadas");
+        this.routerExtensions.navigate(['/login'], {
+            transition: {
+                name: "fade"
+            }
+        });
+    };
+    AppComponent.prototype.loadBadges = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.badges = [];
+                this.database.getdbConnection()
+                    .then(function (db) {
+                    db.all("SELECT * FROM badges").then(function (rows) {
+                        if (rows.length > 0) {
+                            for (var row in rows) {
+                                _this.badges.push({
+                                    "badge": rows[row][1],
+                                    "city": rows[row][2],
+                                    "soat_exp_date": rows[row][3],
+                                    "tecmec_exp_date": rows[row][4],
+                                    "license_exp_date": rows[row][5],
+                                    "next_oil_change": rows[row][6],
+                                    "soat_img": rows[row][7],
+                                    "tecmec_img": rows[row][8],
+                                    "license_img": rows[row][9],
+                                    "cell": backend_service_1.BackendService.phoneNumber
+                                });
+                            }
+                            _this.db = db;
+                        }
+                    }, function (error) {
+                        console.log("SELECT ERROR", error);
+                    });
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    AppComponent.prototype.connectionToString = function (connectionType) {
+        switch (connectionType) {
+            case Connectivity.connectionType.none:
+                return "0";
+            case Connectivity.connectionType.wifi:
+                return "1";
+            case Connectivity.connectionType.mobile:
+                return "2";
+            default:
+                return "3";
+        }
+    };
+    AppComponent.prototype.checkInternet = function () {
+        var _this = this;
+        this.connectionType = this.connectionToString(Connectivity.getConnectionType());
+        Connectivity.startMonitoring(function (connectionType) {
+            _this.zone.run(function () {
+                _this.connectionType = _this.connectionToString(connectionType);
+            });
+        });
+        console.log("Estado de subida: ", backend_service_1.BackendService.upload);
+        console.log("Estado de conexión: ", this.connectionType);
+        if (this.connectionType !== '0' && backend_service_1.BackendService.upload === true) {
+            console.log("Hay conexión, se sube");
+            var data = {
+                badge: this.badges
+            };
+            console.log(data);
+            this.userService.upload(data).subscribe(function (res) {
+                if (res) {
+                    console.log(JSON.stringify(res));
+                    backend_service_1.BackendService.upload = false;
+                }
+            }, function (err) {
+                console.log(err);
+                backend_service_1.BackendService.upload = false;
+            });
+            console.log("Estado posterior a la subida: ", backend_service_1.BackendService.upload);
+        }
     };
     Object.defineProperty(AppComponent.prototype, "sideDrawerTransition", {
         get: function () {
@@ -44,10 +203,8 @@ var AppComponent = /** @class */ (function () {
             moduleId: module.id,
             selector: "ns-app",
             templateUrl: "app.component.html"
-        }),
-        __metadata("design:paramtypes", [router_1.Router, router_2.RouterExtensions])
+        })
     ], AppComponent);
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxzQ0FBNkQ7QUFDN0QsMENBQXdEO0FBQ3hELHNEQUErRDtBQUMvRCx5RUFBeUc7QUFDekcsNENBQXdDO0FBQ3hDLGtEQUFvRDtBQU9wRDtJQUlJLHNCQUFvQixNQUFjLEVBQVUsZ0JBQWtDO1FBQTFELFdBQU0sR0FBTixNQUFNLENBQVE7UUFBVSxxQkFBZ0IsR0FBaEIsZ0JBQWdCLENBQWtCO1FBQzFFLG9EQUFvRDtJQUN4RCxDQUFDO0lBRUQsK0JBQVEsR0FBUjtRQUFBLGlCQU9DO1FBTkcsSUFBSSxDQUFDLGFBQWEsR0FBRyxPQUFPLENBQUM7UUFDN0IsSUFBSSxDQUFDLHFCQUFxQixHQUFHLElBQUksbURBQXNCLEVBQUUsQ0FBQztRQUUxRCxJQUFJLENBQUMsTUFBTSxDQUFDLE1BQU07YUFDakIsSUFBSSxDQUFDLGtCQUFNLENBQUMsVUFBQyxLQUFVLElBQUssT0FBQSxLQUFLLFlBQVksc0JBQWEsRUFBOUIsQ0FBOEIsQ0FBQyxDQUFDO2FBQzVELFNBQVMsQ0FBQyxVQUFDLEtBQW9CLElBQUssT0FBQSxLQUFJLENBQUMsYUFBYSxHQUFHLEtBQUssQ0FBQyxpQkFBaUIsRUFBNUMsQ0FBNEMsQ0FBQyxDQUFDO0lBQ3ZGLENBQUM7SUFFRCxzQkFBSSw4Q0FBb0I7YUFBeEI7WUFDSSxPQUFPLElBQUksQ0FBQyxxQkFBcUIsQ0FBQztRQUN0QyxDQUFDOzs7T0FBQTtJQUVELDBDQUFtQixHQUFuQixVQUFvQixHQUFXO1FBQzNCLE9BQU8sSUFBSSxDQUFDLGFBQWEsS0FBSyxHQUFHLENBQUM7SUFDdEMsQ0FBQztJQUVELG1DQUFZLEdBQVosVUFBYSxZQUFvQjtRQUM3QixJQUFJLENBQUMsZ0JBQWdCLENBQUMsUUFBUSxDQUFDLENBQUMsWUFBWSxDQUFDLEVBQUU7WUFDM0MsVUFBVSxFQUFFO2dCQUNSLElBQUksRUFBRSxNQUFNO2FBQ2Y7U0FDSixDQUFDLENBQUM7UUFFSCxJQUFNLFVBQVUsR0FBa0IsR0FBRyxDQUFDLFdBQVcsRUFBRSxDQUFDO1FBQ3BELFVBQVUsQ0FBQyxXQUFXLEVBQUUsQ0FBQztJQUM3QixDQUFDO0lBbENRLFlBQVk7UUFMeEIsZ0JBQVMsQ0FBQztZQUNQLFFBQVEsRUFBRSxNQUFNLENBQUMsRUFBRTtZQUNuQixRQUFRLEVBQUUsUUFBUTtZQUNsQixXQUFXLEVBQUUsb0JBQW9CO1NBQ3BDLENBQUM7eUNBSzhCLGVBQU0sRUFBNEIseUJBQWdCO09BSnJFLFlBQVksQ0FtQ3hCO0lBQUQsbUJBQUM7Q0FBQSxBQW5DRCxJQW1DQztBQW5DWSxvQ0FBWSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgT25Jbml0LCBWaWV3Q2hpbGQgfSBmcm9tIFwiQGFuZ3VsYXIvY29yZVwiO1xuaW1wb3J0IHsgTmF2aWdhdGlvbkVuZCwgUm91dGVyIH0gZnJvbSBcIkBhbmd1bGFyL3JvdXRlclwiO1xuaW1wb3J0IHsgUm91dGVyRXh0ZW5zaW9ucyB9IGZyb20gXCJuYXRpdmVzY3JpcHQtYW5ndWxhci9yb3V0ZXJcIjtcbmltcG9ydCB7IERyYXdlclRyYW5zaXRpb25CYXNlLCBSYWRTaWRlRHJhd2VyLCBTbGlkZUluT25Ub3BUcmFuc2l0aW9uIH0gZnJvbSBcIm5hdGl2ZXNjcmlwdC11aS1zaWRlZHJhd2VyXCI7XG5pbXBvcnQgeyBmaWx0ZXIgfSBmcm9tIFwicnhqcy9vcGVyYXRvcnNcIjtcbmltcG9ydCAqIGFzIGFwcCBmcm9tIFwidG5zLWNvcmUtbW9kdWxlcy9hcHBsaWNhdGlvblwiO1xuXG5AQ29tcG9uZW50KHtcbiAgICBtb2R1bGVJZDogbW9kdWxlLmlkLFxuICAgIHNlbGVjdG9yOiBcIm5zLWFwcFwiLFxuICAgIHRlbXBsYXRlVXJsOiBcImFwcC5jb21wb25lbnQuaHRtbFwiXG59KVxuZXhwb3J0IGNsYXNzIEFwcENvbXBvbmVudCBpbXBsZW1lbnRzIE9uSW5pdCB7XG4gICAgcHJpdmF0ZSBfYWN0aXZhdGVkVXJsOiBzdHJpbmc7XG4gICAgcHJpdmF0ZSBfc2lkZURyYXdlclRyYW5zaXRpb246IERyYXdlclRyYW5zaXRpb25CYXNlO1xuXG4gICAgY29uc3RydWN0b3IocHJpdmF0ZSByb3V0ZXI6IFJvdXRlciwgcHJpdmF0ZSByb3V0ZXJFeHRlbnNpb25zOiBSb3V0ZXJFeHRlbnNpb25zKSB7XG4gICAgICAgIC8vIFVzZSB0aGUgY29tcG9uZW50IGNvbnN0cnVjdG9yIHRvIGluamVjdCBzZXJ2aWNlcy5cbiAgICB9XG5cbiAgICBuZ09uSW5pdCgpOiB2b2lkIHtcbiAgICAgICAgdGhpcy5fYWN0aXZhdGVkVXJsID0gXCIvaG9tZVwiO1xuICAgICAgICB0aGlzLl9zaWRlRHJhd2VyVHJhbnNpdGlvbiA9IG5ldyBTbGlkZUluT25Ub3BUcmFuc2l0aW9uKCk7XG5cbiAgICAgICAgdGhpcy5yb3V0ZXIuZXZlbnRzXG4gICAgICAgIC5waXBlKGZpbHRlcigoZXZlbnQ6IGFueSkgPT4gZXZlbnQgaW5zdGFuY2VvZiBOYXZpZ2F0aW9uRW5kKSlcbiAgICAgICAgLnN1YnNjcmliZSgoZXZlbnQ6IE5hdmlnYXRpb25FbmQpID0+IHRoaXMuX2FjdGl2YXRlZFVybCA9IGV2ZW50LnVybEFmdGVyUmVkaXJlY3RzKTtcbiAgICB9XG5cbiAgICBnZXQgc2lkZURyYXdlclRyYW5zaXRpb24oKTogRHJhd2VyVHJhbnNpdGlvbkJhc2Uge1xuICAgICAgICByZXR1cm4gdGhpcy5fc2lkZURyYXdlclRyYW5zaXRpb247XG4gICAgfVxuXG4gICAgaXNDb21wb25lbnRTZWxlY3RlZCh1cmw6IHN0cmluZyk6IGJvb2xlYW4ge1xuICAgICAgICByZXR1cm4gdGhpcy5fYWN0aXZhdGVkVXJsID09PSB1cmw7XG4gICAgfVxuXG4gICAgb25OYXZJdGVtVGFwKG5hdkl0ZW1Sb3V0ZTogc3RyaW5nKTogdm9pZCB7XG4gICAgICAgIHRoaXMucm91dGVyRXh0ZW5zaW9ucy5uYXZpZ2F0ZShbbmF2SXRlbVJvdXRlXSwge1xuICAgICAgICAgICAgdHJhbnNpdGlvbjoge1xuICAgICAgICAgICAgICAgIG5hbWU6IFwiZmFkZVwiXG4gICAgICAgICAgICB9XG4gICAgICAgIH0pO1xuXG4gICAgICAgIGNvbnN0IHNpZGVEcmF3ZXIgPSA8UmFkU2lkZURyYXdlcj5hcHAuZ2V0Um9vdFZpZXcoKTtcbiAgICAgICAgc2lkZURyYXdlci5jbG9zZURyYXdlcigpO1xuICAgIH1cbn1cbiJdfQ==

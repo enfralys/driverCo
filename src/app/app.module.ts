@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/register.component';
 
 import { InputMaskModule } from 'nativescript-input-mask/angular';
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { ReactiveFormsModule } from "@angular/forms";
 let server = 'http://138.68.31.167:4444';
 @NgModule({
     bootstrap: [
@@ -26,6 +27,7 @@ let server = 'http://138.68.31.167:4444';
         AppRoutingModule,
         NativeScriptModule,
         NativeScriptFormsModule,
+        ReactiveFormsModule,
         NativeScriptRouterModule,
         NativeScriptUIListViewModule,
         NativeScriptUISideDrawerModule,

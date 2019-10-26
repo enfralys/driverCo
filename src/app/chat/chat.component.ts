@@ -1,9 +1,9 @@
 import { Component, OnInit, NgZone, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListView } from "ui/list-view";
-import { TextField } from "ui/text-field";
 import * as SocketIO from 'nativescript-socket.io';
 import { Page } from 'tns-core-modules/ui/page/page';
+import { BackendService } from '../shared';
+import { TextField } from 'tns-core-modules/ui/text-field/text-field';
 
 @Component({
     selector: 'ns-chat',
@@ -14,11 +14,12 @@ export class ChatComponent implements OnInit {
 
     public me: String;
 
-    @ViewChild("list", {static: false}) lv: ElementRef;
-    @ViewChild("textfield", {static: false}) tf: ElementRef;
 
-    list: ListView;
-    textfield: TextField;
+    mensaje:String;
+    @ViewChild("list", {static: false}) lv: ElementRef;
+  
+ 
+    
 
 
     chats$;
@@ -41,6 +42,7 @@ export class ChatComponent implements OnInit {
     constructor(private ngZone: NgZone, private page: Page) {
         this.page.actionBarHidden = false;
         console.log(this.so);
+        console.log("aja mamsita");
         SocketIO.enableDebug();
     }
 
@@ -63,13 +65,33 @@ export class ChatComponent implements OnInit {
     //     });
 
     // }
-    // sendMessage() {
-    //     this.countries.push(9);
-    //     this.so.emit('support', {
-    //         message: "Esto es el chat1",
-    //         id: "token de prueba"
-    //     })
-    // }
+  
+    public onTextChange(args) {
+        let textField = <TextField>args.object;
+
+        this.mensaje = textField.text;
+      
+    }
+
+    public onReturn(args) {
+        let textField = <TextField>args.object;
+
+        console.log("onReturn",textField);
+        
+    }
+
+sendMessage() {
+        let msj = {
+            msj :this.mensaje,
+            date: new Date(),
+            in : true,
+            cell: BackendService.phoneNumber
+        }
+        console.log(this.mensaje);
+        this.so.emit('support',msj, res =>{
+            this.mensaje = ""
+})
+     }
 
     // public ngAfterViewInit() {
     //     this.list = this.lv.nativeElement;
