@@ -15,7 +15,7 @@
     <Label class="action-bar-title" [text]="badge.badge"></Label>
 </ActionBar>
 
-<GridLayout>
+<GridLayout *ngIf="datePanel == false">
     <ScrollView>
         <StackLayout class="page">
             <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3" (tap)="detect('soat')" >
@@ -34,12 +34,13 @@
             </CardView>
             <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3" (tap)="detect('lice')">
                 <StackLayout class="card-layout">
+                    
                     <Label class="h2" text="LICENCIA"></Label>
                     <Label class="body" textWrap="true" text="VENCIMIENTO"></Label>
                     <Label class="date" textWrap="true" [text]="license_exp_date"></Label>
                 </StackLayout>
             </CardView>
-            <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3" >
+            <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3"  (tap)="detect('oil')">
                 <StackLayout class="card-layout">
                     <Label class="h2" text="CAMBIO DE ACEITE"></Label>
                     <Label class="body" textWrap="true" text="PRÓXIMO"></Label>
@@ -50,7 +51,19 @@
     </ScrollView>
 </GridLayout>
 
-
+<GridLayout *ngIf="datePanel == true">
+    <ScrollView>
+        <StackLayout class="page">
+            <CardView class="card" elevation="40" radius="10" ios:shadowRadius="3" >
+                <StackLayout class="card-layout">
+                    <Label class="h2" text="Ingrese fecha de vencimiento"></Label>
+                    <DatePickerField width="100%" hint="Seleccione fecha de vencimiento" (dateChange)="setDate($event)" [isEnabled]="!processing"></DatePickerField>
+                
+                </StackLayout>
+            </CardView>
+        </StackLayout>
+    </ScrollView>
+</GridLayout>
 <!-- <StackLayout>
     <GridLayout class="items">
         <Label text="SOAT"></Label>

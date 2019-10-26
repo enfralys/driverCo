@@ -44,6 +44,7 @@
         "nativescript-theme-core": "~1.0.4",
         "nativescript-ui-listview": "^7.1.0",
         "nativescript-ui-sidedrawer": "7.0.0",
+        "nativescript-windowed-modal": "^6.0.0",
         "ngx-socket-io": "^3.0.1",
         "reflect-metadata": "~0.1.12",
         "rxjs": "~6.3.0",

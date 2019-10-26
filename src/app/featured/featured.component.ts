@@ -13,6 +13,7 @@ import * as bgHttp from "nativescript-background-http";
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 
 import { ModalComponent } from "./modal/modal.component";
+import { SqliteService } from "../shared/services/sqlite.service";
 
 registerElement("CardView", () => CardView);
 
@@ -26,6 +27,7 @@ registerElement("CardView", () => CardView);
 export class FeaturedComponent implements OnInit {
     imageAssets = [];
     imageSrc: any;
+    datePanel = false;
     server = "http://138.68.31.167:5000";
     public currentFileNameBeingUploaded = "";
     private session: any;
@@ -39,21 +41,13 @@ export class FeaturedComponent implements OnInit {
     tecmec_exp_date;
     license_exp_date;
     next_oil_change;
- a = {
-badge: "DRU-523",
-city: "Bogota",
-soat_exp_date: "2020-1-12",
-tecmec_exp_date: "2020-7-21",
-license_exp_date: "2020-8-02",
-next_oil_change: "2019-12-01",
-soat_img: null,
-tecmec_img: null,
-license_img: null}
-
+ 
+type;
    constructor(private userapi: UserapiService, private datePipe: DatePipe,
         private router: RouterExtensions,
         private modalService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef) {
+        private viewContainerRef: ViewContainerRef,
+        private sqlite:SqliteService) {
 
         // Use the component constructor to inject providers.
         this.session = bgHttp.session("image-upload");
@@ -96,22 +90,24 @@ license_img: null}
     }
 
    async detect(obj){
-        console.log(this.badge);
+        
        switch (obj) {
            case 'soat':
-               if (!this.badge.soat_exp_date) {
-                   return this.setDate(this.badge.soat_exp_date);
+               if (this.badge.soat_exp_date == null) {
+                   this.type = 'soat';
+               return    this.datePanel = true;
                }
                if (!this.badge.soat_img) {
                    //
-                this.badge.soat_img=this.setImage();
-                console.log(this.badge);
+               return this.badge.soat_img=this.setImage();
+              
                }
                break;
        
                case 'tecno':
-                    if (!this.a.tecmec_exp_date) {
-                        return this.setDate(this.a.tecmec_exp_date);
+                    if (this.badge.tecmec_exp_date == null) {
+                        this.type = 'tecno';
+                        return  this.datePanel = true;
                     }
                     if (!this.badge.tecmec_img) {
                      return this.setImage();
@@ -119,13 +115,21 @@ license_img: null}
                break;
 
                case 'lice':
-                    if (!this.a.license_exp_date) {
-                        return this.setDate(this.a.license_exp_date);
+                    if (this.badge.license_exp_date == null) {
+                        this.type = 'tecno';
+                      return  this.datePanel = true;
                     }
                     if (!this.badge.license_img) {
                      return this.setImage();
                     }
+
                break;
+               case 'oil':
+                    if (this.badge.next_oil_change == null) {
+                        this.type = 'oil';
+                        this.datePanel = true;
+                    }
+                 
            default:
                break;
        }
@@ -133,16 +137,48 @@ license_img: null}
 
 
     async setImage(){
-        await alert("test");
+        this.badge.badge = "relasd"
+       this.sqlite.update(this.badge)
         
         console.log("aca paso");
         return  "loca";
     }
-
+    getMonthFromString(mon) {
+        return new Date(Date.parse(mon + " 1, 2019")).getMonth() + 1
+    }
     
-    setDate(a){
-        a = "loca";
+    setDate(args){
+        var date = args.value.toString();
+        var arr = new Array();
+        arr = date.split(" ");
+        var month = this.getMonthFromString(arr[1]);
+        var fullDate = arr[3] + "-" + month + "-" + arr[2];
+        console.log(fullDate);
+        switch (this.type) {
+            case 'soat':
+                console.log('aqui paso');
+                
+                this.badge.soat_exp_date = fullDate;
+                this.reload();
+                this.datePanel = false;
+                break;
+        
+                case 'tecno':
+                    this.badge.tecmec_exp_date = fullDate;
+                    this.reload();
+                    this.datePanel = false;
+                break;
+ 
+                case 'lice':
+                    this.badge.license_exp_date = fullDate;
+                    this.reload();
+                    this.datePanel = false;
+                break;
+            default:
+                break;
+        }
         console.log(this.badge);
+        return fullDate;
     }
     onSelectSingleTap() {
         const options: ModalDialogOptions = {
@@ -238,6 +274,32 @@ license_img: null}
             });
     }
 
+        reload(){
+            
+        if (this.badge.soat_exp_date) {
+            this.soat_exp_date = this.datePipe.transform(this.badge.soat_exp_date, 'dd/MM/yyyy');
+        } else {
+            this.soat_exp_date = "SIN INFORMACIÓN";
+        }
+
+        if (this.badge.tecmec_exp_date) {
+            this.tecmec_exp_date = this.datePipe.transform(this.badge.tecmec_exp_date, 'dd/MM/yyyy');
+        } else {
+            this.tecmec_exp_date = "SIN INFORMACIÓN";
+        }
+
+        if (this.badge.license_exp_date) {
+            this.license_exp_date = this.datePipe.transform(this.badge.license_exp_date, 'dd/MM/yyyy');
+        } else {
+            this.license_exp_date = "SIN INFORMACIÓN";
+        }
+
+        if (this.badge.next_oil_change) {
+            this.next_oil_change = this.datePipe.transform(this.badge.next_oil_change, 'dd/MM/yyyy');
+        } else {
+            this.next_oil_change = "SIN INFORMACIÓN";
+        }
+        }
     private getImageFilePath(imageAsset): Promise<string> {
         return new Promise((resolve) => {
             if (isIOS) { // create file from image asset and return its path

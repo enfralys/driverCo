@@ -83,6 +83,7 @@ export class BadgesComponent implements OnInit {
                         }
                         this.db = db;
                         this.cantidad = true;
+                        console.log("busco en la bd");
                     }
                 }, error => {
                     console.log("SELECT ERROR", error);
