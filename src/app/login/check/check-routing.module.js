@@ -2,19 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("nativescript-angular/router");
-var search_component_1 = require("./search.component");
+var check_component_1 = require("./check.component");
 var routes = [
-    { path: "", component: search_component_1.SearchComponent }
+    { path: "", component: check_component_1.CheckComponent }
 ];
-var SearchRoutingModule = /** @class */ (function () {
-    function SearchRoutingModule() {
+var CheckRoutingModule = /** @class */ (function () {
+    function CheckRoutingModule() {
     }
-    SearchRoutingModule = __decorate([
+    CheckRoutingModule = __decorate([
         core_1.NgModule({
             imports: [router_1.NativeScriptRouterModule.forChild(routes)],
             exports: [router_1.NativeScriptRouterModule]
         })
-    ], SearchRoutingModule);
-    return SearchRoutingModule;
+    ], CheckRoutingModule);
+    return CheckRoutingModule;
 }());
-exports.SearchRoutingModule = SearchRoutingModule;
+exports.CheckRoutingModule = CheckRoutingModule;

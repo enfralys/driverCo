@@ -1,47 +1,185 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
+var nativescript_fancyalert_1 = require("nativescript-fancyalert");
+var backend_service_1 = require("../shared/backend.service");
+var router_1 = require("nativescript-angular/router");
+var sqlite_service_1 = require("../shared/services/sqlite.service");
+var imagepicker = require("nativescript-imagepicker");
 var AddplacaComponent = /** @class */ (function () {
-    function AddplacaComponent(router) {
+    function AddplacaComponent(router, database) {
         this.router = router;
+        this.database = database;
+        this.server = "http://138.68.31.167:5000";
+        //vars
+        this.badge = "";
+        this.processing = false;
         this.minDate = new Date(1975, 0, 29);
         this.maxDate = new Date(2045, 4, 12);
+        this.items = ['Bogota', 'Cali', 'Envigado', 'Medellin'];
+        this.imageAssets = [];
+        this.isSingleMode = true;
+        this.thumbSize = 80;
+        this.previewSize = 300;
     }
     AddplacaComponent.prototype.ngOnInit = function () {
     };
-    AddplacaComponent.prototype.onDatePickerLoaded = function (args) {
-        // const datePicker = args.object as DatePicker;
+    AddplacaComponent.prototype.onSelectSingleTap = function () {
+        this.isSingleMode = true;
+        var context = imagepicker.create({
+            mode: "single"
+        });
+        this.startSelection(context);
     };
-    AddplacaComponent.prototype.onDateChanged = function (args) {
-        console.log("Date New value: " + args.value);
-        console.log("Date value: " + args.oldValue);
+    AddplacaComponent.prototype.startSelection = function (context) {
+        var that = this;
+        context
+            .authorize()
+            .then(function () {
+            that.imageAssets = [];
+            that.imageSrc = null;
+            return context.present();
+        })
+            .then(function (selection) {
+            console.log("Selection done: " + JSON.stringify(selection));
+            that.imageSrc = that.isSingleMode && selection.length > 0 ? selection[0] : null;
+            // set the images to be loaded from the assets with optimal sizes (optimize memory usage)
+            selection.forEach(function (element) {
+                element.options.width = that.isSingleMode ? that.previewSize : that.thumbSize;
+                element.options.height = that.isSingleMode ? that.previewSize : that.thumbSize;
+            });
+            that.imageAssets = selection;
+        }).catch(function (e) {
+            console.log(e);
+        });
     };
-    AddplacaComponent.prototype.onDayChanged = function (args) {
-        console.log("Day New value: " + args.value);
-        console.log("Day Old value: " + args.oldValue);
+    AddplacaComponent.prototype.onSelectedIndexChanged = function (args) {
+        var picker = args.object;
+        this.city = this.items[picker.selectedIndex];
+        // console.log(this.city)
+        // console.log(`index: ${picker.selectedIndex}; item" ${this.items[picker.selectedIndex]}`);
     };
-    AddplacaComponent.prototype.onMonthChanged = function (args) {
-        console.log("Month New value: " + args.value);
-        console.log("Month Old value: " + args.oldValue);
+    AddplacaComponent.prototype.soat = function (args) {
+        var date = args.value.toString();
+        var arr = new Array();
+        arr = date.split(" ");
+        var month = this.getMonthFromString(arr[1]);
+        var fullDate = arr[3] + "-" + month + "-" + arr[2];
+        this.soat_exp_date = fullDate;
+        // console.log(fullDate)
+        // console.log("Date New value: " + args.value);
+        // console.log("Date value: " + args.oldValue);
     };
-    AddplacaComponent.prototype.onYearChanged = function (args) {
-        console.log("Year New value: " + args.value);
-        console.log("Year Old value: " + args.oldValue);
+    AddplacaComponent.prototype.tecnoMech = function (args) {
+        var date = args.value.toString();
+        var arr = new Array();
+        arr = date.split(" ");
+        var month = this.getMonthFromString(arr[1]);
+        var fullDate = arr[3] + "-" + month + "-" + arr[2];
+        this.tecmec_exp_date = fullDate;
+        // console.log(fullDate)
+        // console.log("Date New value: " + args.value);
+        // console.log("Date value: " + args.oldValue);
+    };
+    AddplacaComponent.prototype.license = function (args) {
+        var date = args.value.toString();
+        var arr = new Array();
+        arr = date.split(" ");
+        var month = this.getMonthFromString(arr[1]);
+        var fullDate = arr[3] + "-" + month + "-" + arr[2];
+        this.license_exp_date = fullDate;
+        // console.log(fullDate)
+        // console.log("Date New value: " + args.value);
+        // console.log("Date value: " + args.oldValue);
+    };
+    AddplacaComponent.prototype.oilChange = function (args) {
+        var date = args.value.toString();
+        var arr = new Array();
+        arr = date.split(" ");
+        var month = this.getMonthFromString(arr[1]);
+        var fullDate = arr[3] + "-" + month + "-" + arr[2];
+        this.next_oil_change = fullDate;
+        // console.log(fullDate)
+        // console.log("Date New value: " + args.value);
+        // console.log("Date value: " + args.oldValue);
+    };
+    AddplacaComponent.prototype.getMonthFromString = function (mon) {
+        return new Date(Date.parse(mon + " 1, 2019")).getMonth() + 1;
+    };
+    AddplacaComponent.prototype.onItemSelected = function (args) {
+        console.log(args.value);
+    };
+    AddplacaComponent.prototype.mask = function (args) {
+        console.log('Valor: ', args.value);
+        console.log('Placa: ', this.badge);
+        console.log('Longitud: ', args.value.length);
+        if (args.value.length === 6 && !args.value.includes('-') && !args.value.includes(' ')) {
+            var a = args.value.substring(0, 3);
+            var b = args.value.substring(3, 6);
+            console.log(a + b);
+            var res = a + '-' + b;
+            this.badge = res;
+            console.log(this.badge);
+        }
+    };
+    AddplacaComponent.prototype.onDrawerButtonTap = function () {
+        this.router.navigate(['badges'], {
+            animated: true,
+            transition: {
+                name: "slideBottom",
+                duration: 380,
+                curve: "easeIn"
+            }
+        });
     };
     AddplacaComponent.prototype.submit = function () {
-        this.router.navigateByUrl('/home');
+        var _this = this;
+        this.processing = true;
+        console.log('Datos almacenados: ');
+        console.log('Placa: ', this.badge);
+        console.log('Ciudad: ', this.city);
+        console.log('Soat:', this.soat_exp_date);
+        console.log('Tecomecanica: ', this.tecmec_exp_date);
+        console.log('Licencia: ', this.license_exp_date);
+        console.log('Cambio de Aceite: ', this.next_oil_change);
+        if (this.badge.length > 4) {
+            this.database.getdbConnection()
+                .then(function (db) {
+                db.execSQL("INSERT INTO badges (badge, city, soat_exp_date, tecmec_exp_date, license_exp_date, next_oil_change) VALUES (?, ?, ?, ?, ?, ?)", [_this.badge, _this.city, _this.soat_exp_date, _this.tecmec_exp_date, _this.license_exp_date, _this.next_oil_change]).then(function (id) {
+                    console.log("INSERT RESULT", id);
+                    // this.fetch();
+                    nativescript_fancyalert_1.TNSFancyAlert.showSuccess("¡Excelente!", "Sus datos fueron guardados");
+                    _this.processing = false;
+                    _this.router.navigate(['badges'], {
+                        animated: true,
+                        transition: {
+                            name: "slideBottom",
+                            duration: 380,
+                            curve: "easeIn"
+                        }
+                    });
+                    backend_service_1.BackendService.upload = true;
+                }, function (err) {
+                    _this.processing = false;
+                    console.log("INSERT ERROR", err);
+                    nativescript_fancyalert_1.TNSFancyAlert.showError("¡Ha ocurrido un problema!", "No se ha podido guardar");
+                });
+            });
+        }
+        else {
+            nativescript_fancyalert_1.TNSFancyAlert.showWarning("¡Atención!", "La placa no es válida");
+            this.processing = false;
+        }
     };
     AddplacaComponent = __decorate([
         core_1.Component({
-            selector: 'ns-addplaca',
+            selector: 'addplaca',
             templateUrl: './addplaca.component.html',
             styleUrls: ['./addplaca.component.css'],
             moduleId: module.id,
         }),
-        __metadata("design:paramtypes", [router_1.Router])
+        __metadata("design:paramtypes", [router_1.RouterExtensions, sqlite_service_1.SqliteService])
     ], AddplacaComponent);
     return AddplacaComponent;
 }());
 exports.AddplacaComponent = AddplacaComponent;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWRkcGxhY2EuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiYWRkcGxhY2EuY29tcG9uZW50LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsc0NBQWtEO0FBQ2xELDBDQUF5QztBQVF6QztJQUdFLDJCQUFvQixNQUFhO1FBQWIsV0FBTSxHQUFOLE1BQU0sQ0FBTztRQUZqQyxZQUFPLEdBQVMsSUFBSSxJQUFJLENBQUMsSUFBSSxFQUFFLENBQUMsRUFBRSxFQUFFLENBQUMsQ0FBQztRQUN0QyxZQUFPLEdBQVMsSUFBSSxJQUFJLENBQUMsSUFBSSxFQUFFLENBQUMsRUFBRSxFQUFFLENBQUMsQ0FBQztJQUNELENBQUM7SUFFdEMsb0NBQVEsR0FBUjtJQUNBLENBQUM7SUFDRCw4Q0FBa0IsR0FBbEIsVUFBbUIsSUFBSTtRQUNyQixnREFBZ0Q7SUFDcEQsQ0FBQztJQUVELHlDQUFhLEdBQWIsVUFBYyxJQUFJO1FBQ2QsT0FBTyxDQUFDLEdBQUcsQ0FBQyxrQkFBa0IsR0FBRyxJQUFJLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDN0MsT0FBTyxDQUFDLEdBQUcsQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDO0lBQ2hELENBQUM7SUFFRCx3Q0FBWSxHQUFaLFVBQWEsSUFBSTtRQUNiLE9BQU8sQ0FBQyxHQUFHLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQzVDLE9BQU8sQ0FBQyxHQUFHLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDO0lBQ25ELENBQUM7SUFFRCwwQ0FBYyxHQUFkLFVBQWUsSUFBSTtRQUNmLE9BQU8sQ0FBQyxHQUFHLENBQUMsbUJBQW1CLEdBQUcsSUFBSSxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQzlDLE9BQU8sQ0FBQyxHQUFHLENBQUMsbUJBQW1CLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDO0lBQ3JELENBQUM7SUFFRCx5Q0FBYSxHQUFiLFVBQWMsSUFBSTtRQUNkLE9BQU8sQ0FBQyxHQUFHLENBQUMsa0JBQWtCLEdBQUcsSUFBSSxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQzdDLE9BQU8sQ0FBQyxHQUFHLENBQUMsa0JBQWtCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDO0lBQ3BELENBQUM7SUFFRCxrQ0FBTSxHQUFOO1FBQ0UsSUFBSSxDQUFDLE1BQU0sQ0FBQyxhQUFhLENBQUMsT0FBTyxDQUFDLENBQUE7SUFDcEMsQ0FBQztJQWpDWSxpQkFBaUI7UUFON0IsZ0JBQVMsQ0FBQztZQUNULFFBQVEsRUFBRSxhQUFhO1lBQ3ZCLFdBQVcsRUFBRSwyQkFBMkI7WUFDeEMsU0FBUyxFQUFFLENBQUMsMEJBQTBCLENBQUM7WUFDdkMsUUFBUSxFQUFFLE1BQU0sQ0FBQyxFQUFFO1NBQ3BCLENBQUM7eUNBSTJCLGVBQU07T0FIdEIsaUJBQWlCLENBa0M3QjtJQUFELHdCQUFDO0NBQUEsQUFsQ0QsSUFrQ0M7QUFsQ1ksOENBQWlCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBPbkluaXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IFJvdXRlciB9IGZyb20gJ0Bhbmd1bGFyL3JvdXRlcic7XG5cbkBDb21wb25lbnQoe1xuICBzZWxlY3RvcjogJ25zLWFkZHBsYWNhJyxcbiAgdGVtcGxhdGVVcmw6ICcuL2FkZHBsYWNhLmNvbXBvbmVudC5odG1sJyxcbiAgc3R5bGVVcmxzOiBbJy4vYWRkcGxhY2EuY29tcG9uZW50LmNzcyddLFxuICBtb2R1bGVJZDogbW9kdWxlLmlkLFxufSlcbmV4cG9ydCBjbGFzcyBBZGRwbGFjYUNvbXBvbmVudCBpbXBsZW1lbnRzIE9uSW5pdCB7XG4gIG1pbkRhdGU6IERhdGUgPSBuZXcgRGF0ZSgxOTc1LCAwLCAyOSk7XG4gIG1heERhdGU6IERhdGUgPSBuZXcgRGF0ZSgyMDQ1LCA0LCAxMik7XG4gIGNvbnN0cnVjdG9yKHByaXZhdGUgcm91dGVyOlJvdXRlcikgeyB9XG5cbiAgbmdPbkluaXQoKSB7XG4gIH1cbiAgb25EYXRlUGlja2VyTG9hZGVkKGFyZ3MpIHtcbiAgICAvLyBjb25zdCBkYXRlUGlja2VyID0gYXJncy5vYmplY3QgYXMgRGF0ZVBpY2tlcjtcbn1cblxub25EYXRlQ2hhbmdlZChhcmdzKSB7XG4gICAgY29uc29sZS5sb2coXCJEYXRlIE5ldyB2YWx1ZTogXCIgKyBhcmdzLnZhbHVlKTtcbiAgICBjb25zb2xlLmxvZyhcIkRhdGUgdmFsdWU6IFwiICsgYXJncy5vbGRWYWx1ZSk7XG59XG5cbm9uRGF5Q2hhbmdlZChhcmdzKSB7XG4gICAgY29uc29sZS5sb2coXCJEYXkgTmV3IHZhbHVlOiBcIiArIGFyZ3MudmFsdWUpO1xuICAgIGNvbnNvbGUubG9nKFwiRGF5IE9sZCB2YWx1ZTogXCIgKyBhcmdzLm9sZFZhbHVlKTtcbn1cblxub25Nb250aENoYW5nZWQoYXJncykge1xuICAgIGNvbnNvbGUubG9nKFwiTW9udGggTmV3IHZhbHVlOiBcIiArIGFyZ3MudmFsdWUpO1xuICAgIGNvbnNvbGUubG9nKFwiTW9udGggT2xkIHZhbHVlOiBcIiArIGFyZ3Mub2xkVmFsdWUpO1xufVxuXG5vblllYXJDaGFuZ2VkKGFyZ3MpIHtcbiAgICBjb25zb2xlLmxvZyhcIlllYXIgTmV3IHZhbHVlOiBcIiArIGFyZ3MudmFsdWUpO1xuICAgIGNvbnNvbGUubG9nKFwiWWVhciBPbGQgdmFsdWU6IFwiICsgYXJncy5vbGRWYWx1ZSk7XG59XG5cbnN1Ym1pdCgpe1xuICB0aGlzLnJvdXRlci5uYXZpZ2F0ZUJ5VXJsKCcvaG9tZScpXG59XG59XG4iXX0=

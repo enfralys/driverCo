@@ -2,25 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var common_1 = require("nativescript-angular/common");
-var browse_routing_module_1 = require("./browse-routing.module");
-var browse_component_1 = require("./browse.component");
-var BrowseModule = /** @class */ (function () {
-    function BrowseModule() {
+var chat_routing_module_1 = require("./chat-routing.module");
+var chat_component_1 = require("./chat.component");
+var ChatModule = /** @class */ (function () {
+    function ChatModule() {
     }
-    BrowseModule = __decorate([
+    ChatModule = __decorate([
         core_1.NgModule({
             imports: [
                 common_1.NativeScriptCommonModule,
-                browse_routing_module_1.BrowseRoutingModule
+                chat_routing_module_1.ChatRoutingModule
             ],
             declarations: [
-                browse_component_1.BrowseComponent
+                chat_component_1.ChatComponent
             ],
             schemas: [
                 core_1.NO_ERRORS_SCHEMA
             ]
         })
-    ], BrowseModule);
-    return BrowseModule;
+    ], ChatModule);
+    return ChatModule;
 }());
-exports.BrowseModule = BrowseModule;
+exports.ChatModule = ChatModule;

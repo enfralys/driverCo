@@ -2,25 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var common_1 = require("nativescript-angular/common");
-var browse_routing_module_1 = require("./browse-routing.module");
-var browse_component_1 = require("./browse.component");
-var BrowseModule = /** @class */ (function () {
-    function BrowseModule() {
+var login_routing_module_1 = require("./login-routing.module");
+var login_component_1 = require("./login.component");
+var LoginModule = /** @class */ (function () {
+    function LoginModule() {
     }
-    BrowseModule = __decorate([
+    LoginModule = __decorate([
         core_1.NgModule({
             imports: [
                 common_1.NativeScriptCommonModule,
-                browse_routing_module_1.BrowseRoutingModule
+                login_routing_module_1.LoginRoutingModule
             ],
             declarations: [
-                browse_component_1.BrowseComponent
+                login_component_1.LoginComponent
             ],
             schemas: [
                 core_1.NO_ERRORS_SCHEMA
             ]
         })
-    ], BrowseModule);
-    return BrowseModule;
+    ], LoginModule);
+    return LoginModule;
 }());
-exports.BrowseModule = BrowseModule;
+exports.LoginModule = LoginModule;

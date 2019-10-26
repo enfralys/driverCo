@@ -1,7 +1,7 @@
 import { Component, OnInit, NgZone, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListView } from "ui/list-view";
-import { TextField } from "ui/text-field";
+import { ListView } from "tns-core-modules/ui/list-view";
+import { TextField } from "tns-core-modules/ui/text-field";
 import * as SocketIO from 'nativescript-socket.io';
 import { Page } from 'tns-core-modules/ui/page/page';
 
@@ -19,7 +19,6 @@ export class ChatComponent implements OnInit {
 
     list: ListView;
     textfield: TextField;
-
 
     chats$;
 
@@ -71,10 +70,10 @@ export class ChatComponent implements OnInit {
     //     })
     // }
 
-    // public ngAfterViewInit() {
-    //     this.list = this.lv.nativeElement;
-    //     this.textfield = this.tf.nativeElement;
-    // }
+    public ngAfterViewInit() {
+        this.list = this.lv.nativeElement;
+        this.textfield = this.tf.nativeElement;
+    }
 
     // scroll(count: number) {
     //     console.log("scrolling to ", count)

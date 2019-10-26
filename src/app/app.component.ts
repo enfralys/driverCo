@@ -18,7 +18,7 @@ import { SocketIO } from "nativescript-socketio";
     templateUrl: "app.component.html"
 })
 
-export class AppComponent implements OnInit, OnDestroy  {
+export class AppComponent implements OnInit, OnDestroy {
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;
     public connectionType: string;
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy  {
     db: any;
     badges: Array<any>;
 
-    constructor(private socketIO: SocketIO,private router: Router, private routerExtensions: RouterExtensions, private database: SqliteService, private zone: NgZone, private userService: UserapiService) {
+    constructor(private socketIO: SocketIO, private router: Router, private routerExtensions: RouterExtensions, private database: SqliteService, private zone: NgZone, private userService: UserapiService) {
         // Use the component constructor to inject services.
 
         this.database.getdbConnection()
@@ -55,9 +55,9 @@ export class AppComponent implements OnInit, OnDestroy  {
 
     ngOnInit(): void {
         console.log('test');
-       console.log(this.socketIO.connect()); 
-     
-      
+        console.log(this.socketIO.connect());
+
+
         this._activatedUrl = "/home";
         this._sideDrawerTransition = new SlideInOnTopTransition();
 
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit, OnDestroy  {
 
     ngOnDestroy() {
         this.socketIO.disconnect();
-      }
+    }
 
     logOut() {
         console.log(BackendService.token);
