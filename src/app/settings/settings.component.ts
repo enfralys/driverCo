@@ -75,4 +75,41 @@ export class SettingsComponent implements OnInit {
                 );
             })
     }
+
+    async DownloadInfo() {
+        console.log(BackendService.phoneNumber)
+
+        let data = {
+            cell: BackendService.phoneNumber
+        }
+
+        this.userService.download(data).subscribe(
+            res => {
+                let response: any = res;
+
+                if (response) {
+                    if (response !== 'empty') {
+                        response.data.forEach(element => {
+                            console.log(element.badge)
+                            this.database.getdbConnection()
+                                .then(db => {
+                                    db.execSQL("INSERT INTO badges (badge, city, soat_exp_date, tecmec_exp_date, license_exp_date, next_oil_change) VALUES (?, ?, ?, ?, ?, ?)", [element.badge, element.city, element.soat_exp_date, element.tecmec_exp_date, element.license_exp_date, element.next_oil_change]).then(id => {
+                                        console.log("INSERT RESULT", id);
+                                        this.loadBadges();
+                                    }, err => {
+                                        console.log("INSERT ERROR", err);
+
+                                    });
+                                });
+                        });
+                        console.log('Cargando DB local');
+                    } else {
+                        console.log('No hay datos');
+                    }
+                }
+            },
+            err => {
+                console.log(err);
+            })
+    }
 }

@@ -1,39 +1,57 @@
-/* Chat */
-.list-chat {
-    padding: 24 0;
+ListView {
+    separator-color: white;
 }
 
-.conversation-content {
-    padding: 12 0;
+GridLayout {
+    padding: 8;
 }
 
-.convImg {
-    width: 60;
-    height: 60;
-    border-radius: 30;
-    /*android delete this padding: 0 12;*/
+.msg {
+    font-size: 14;
+    padding: 5;
 }
 
-.convFriendName {
-    font-weight: bold;
-    font-size: 19;
-    padding: 0;
+.me .msg_text {
+    background-color: #30A9FF;
+    color: white;
+    padding: 8;
+    margin-right: 10;
+    border-radius: 5;
 }
 
-.convDateOut {
-    font-size: 15;
-    text-align: center;
+.them .msg_text {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 7;
+    border-radius: 5;
+    margin-right: 40;
 }
 
-.convTextOut {
-    font-size: 15;
+.authorimg {
+    margin: 0 5 5 5;
+    width: 30;
+    height: 30;
+    border-radius: 15;
 }
 
-.notWasSeen {
-    color: #000;
-    font-weight: bold;
+StackLayout {
+    .messageArea {
+        max-height: 10;
+        vertical-align: bottom;
+    }
 }
 
-.wasSeen {
-    color: #6C6C6C;
+.chatTextField {
+    padding: 5;
+    background-color: lightgray;
+    border-radius: 4;
+}
+
+Button {
+    padding: 5;
+    margin: 5;
+    background-color: dodgerblue;
+    color: white;
+    height: 40;
+    border-radius: 5;
 }
