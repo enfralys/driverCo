@@ -30,27 +30,26 @@
                 -->
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
-    <Label class="action-bar-title" text="Soporte"></Label>
+    <Label class="action-bar-title" text="Chat de Soporte"></Label>
 </ActionBar>
 <StackLayout>
-
     <!-- <ScrollView height="90%"> -->
-    <ListView height="90%" margin-bottom="50" padding="5" #list [items]="chats$ | async">
+    <!-- <ListView height="90%" margin-bottom="50" padding="5" #list [items]="chats$ | async"> -->
+    <ListView height="90%" margin-bottom="50" padding="5" #list [items]="chats$">
         <ng-template let-item="item">
             <GridLayout columns="*" rows="auto" class="msg">
                 <StackLayout [class]="filter(item.from)" orientation="horizontal" [horizontalAlignment]="align(item.from)">
-                    <Image [visibility]="showImage(item.from)" class="authorimg" stretch="aspectFill" height="30" width="30" verticalAlignment="top" src="~/images/k1.png" col="1"></Image>
+                    <Image [visibility]="showImage(item.from)" class="authorimg" stretch="aspectFill" height="50" width="50" verticalAlignment="center" src="~/images/logo.png" col="1"></Image>
                     <Label [text]='item.message' class="msg_text" textWrap="true" verticalAlignment="top"></Label>
                 </StackLayout>
             </GridLayout>
         </ng-template>
     </ListView>
-
     <!-- </ScrollView> -->
     <StackLayout height="10%">
         <GridLayout columns="*,auto" style="padding: 10">
-            <TextField hint="Ingresar texto" class="chatTextField" row="0" col="0" [(ngModel)]="message"></TextField>
-            <Button class="chatBtn" row="0" col="1" text="send" (tap)=chat(message)></Button>
+            <TextField hint="Enviar mensaje" (textChange)="onTextChange($event)" class="chatTextField" row="0" col="0"></TextField>
+            <Button class="chatBtn" row="0" col="1" text="enviar" (tap)=sendMessage()></Button>
         </GridLayout>
     </StackLayout>
 </StackLayout>

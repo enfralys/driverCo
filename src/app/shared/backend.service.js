@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var application_settings_1 = require("tns-core-modules/application-settings");
 var BackendService = /** @class */ (function () {
     function BackendService() {

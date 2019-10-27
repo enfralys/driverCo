@@ -4,6 +4,7 @@ import { ListView } from "tns-core-modules/ui/list-view";
 import { TextField } from "tns-core-modules/ui/text-field";
 import * as SocketIO from 'nativescript-socket.io';
 import { Page } from 'tns-core-modules/ui/page/page';
+import { BackendService } from '../shared';
 
 @Component({
     selector: 'ns-chat',
@@ -13,14 +14,13 @@ import { Page } from 'tns-core-modules/ui/page/page';
 export class ChatComponent implements OnInit {
 
     public me: String;
+    mensaje: String;
 
-    @ViewChild("list", {static: false}) lv: ElementRef;
-    @ViewChild("textfield", {static: false}) tf: ElementRef;
+    @ViewChild("list", { static: false }) lv: ElementRef;
 
     list: ListView;
-    textfield: TextField;
 
-    chats$;
+    public chats$ = new Observable<any>();
 
     options = {
         query: {
@@ -35,11 +35,12 @@ export class ChatComponent implements OnInit {
     };
 
     so = SocketIO.connect('http://138.68.31.167:4999', this.options);
-    countries = [0]
+    countries = JSON.parse('[{"from":"me","message":"Mensaje de prueba dentro de un array"},{"from":"them","message":"Respuesta de prueba dentro de un array"},{"from":"me","message":"Otro ejemplo de mensaje enviado a través de un array"}]');
 
     constructor(private ngZone: NgZone, private page: Page) {
         this.page.actionBarHidden = false;
         console.log(this.so);
+        console.log("aja mamsita");
         SocketIO.enableDebug();
     }
 
@@ -50,8 +51,9 @@ export class ChatComponent implements OnInit {
                 this.countries.push(data)
             });
         });
-
-        this.chats$ = this.countries;
+        this.me = "me";
+        console.log(this.countries)
+        this.chats$ = <any>this.countries;
     }
 
     // test() {
@@ -62,17 +64,30 @@ export class ChatComponent implements OnInit {
     //     });
 
     // }
-    // sendMessage() {
-    //     this.countries.push(9);
-    //     this.so.emit('support', {
-    //         message: "Esto es el chat1",
-    //         id: "token de prueba"
-    //     })
-    // }
+
+    public onTextChange(args) {
+        let textField = <TextField>args.object;
+
+        this.mensaje = textField.text;
+        console.log(this.mensaje)
+
+    }
+
+    sendMessage() {
+        let msj = {
+            msj: this.mensaje,
+            date: new Date(),
+            in: true,
+            cell: BackendService.phoneNumber
+        }
+        console.log(this.mensaje);
+        this.so.emit('support', msj, res => {
+            this.mensaje = "";
+        })
+    }
 
     public ngAfterViewInit() {
         this.list = this.lv.nativeElement;
-        this.textfield = this.tf.nativeElement;
     }
 
     // scroll(count: number) {
@@ -89,32 +104,32 @@ export class ChatComponent implements OnInit {
     //     this.textfield.text = '';
     // }
 
-    // filter(sender) {
-    //     if (sender == BackendService.token) {
-    //         return "me"
-    //     }
-    //     else {
-    //         return "them"
-    //     }
-    // }
+    filter(sender) {
+        if (sender === this.me) {
+            return "me"
+        }
+        else {
+            return "them"
+        }
+    }
 
-    // align(sender) {
-    //     if (sender == BackendService.token) {
-    //         return "right"
-    //     }
-    //     else {
-    //         return "left"
-    //     }
-    // }
+    align(sender) {
+        if (sender === this.me) {
+            return "right"
+        }
+        else {
+            return "left"
+        }
+    }
 
-    // showImage(sender) {
-    //     if (sender == BackendService.token) {
-    //         return "collapsed"
-    //     }
-    //     else {
-    //         return "visible"
-    //     }
-    // }
+    showImage(sender) {
+        if (sender === this.me) {
+            return "collapsed"
+        }
+        else {
+            return "visible"
+        }
+    }
 
 
 

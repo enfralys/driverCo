@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var RegisterComponent = /** @class */ (function () {
-    function RegisterComponent() {
-    }
-    RegisterComponent.prototype.ngOnInit = function () {
-    };
+var RegisterComponent = /** @class */ (function() {
+    function RegisterComponent() {}
+    RegisterComponent.prototype.ngOnInit = function() {};
     RegisterComponent = __decorate([
         core_1.Component({
             selector: 'ns-register',

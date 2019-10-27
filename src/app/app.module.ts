@@ -14,7 +14,6 @@ import { RegisterComponent } from './register/register.component';
 
 import { InputMaskModule } from 'nativescript-input-mask/angular';
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
-
 let server = 'http://138.68.31.167:4444';
 
 @NgModule({

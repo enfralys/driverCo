@@ -7,15 +7,16 @@ GridLayout {
 }
 
 .msg {
-    font-size: 14;
+    font-size: 16;
     padding: 5;
 }
 
 .me .msg_text {
     background-color: #30A9FF;
     color: white;
-    padding: 8;
+    padding: 5;
     margin-right: 10;
+    margin-left: 40;
     border-radius: 5;
 }
 
