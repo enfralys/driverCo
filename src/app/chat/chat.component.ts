@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit {
     };
 
     so = SocketIO.connect('http://138.68.31.167:4999', this.options);
-    countries = JSON.parse('[{"from":"me","message":"Mensaje de prueba dentro de un array"},{"from":"them","message":"Respuesta de prueba dentro de un array"},{"from":"me","message":"Otro ejemplo de mensaje enviado a través de un array"}]');
+    countries = JSON.parse('[{"from":"me","message":"Mensaje de prueba dentro de un array2"},{"from":"them","message":"Respuesta de prueba dentro de un array"},{"from":"me","message":"Otro ejemplo de mensaje enviado a través de un array"}]');
 
     constructor(private ngZone: NgZone, private page: Page) {
         this.page.actionBarHidden = false;
@@ -45,8 +45,8 @@ export class ChatComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.so.on("messages", data => {
-            console.log("conecto");
+        this.so.on(`3000000000`, data => {
+            console.log("conecto",data);
             this.ngZone.run(() => {
                 this.countries.push(data)
             });
@@ -75,12 +75,12 @@ export class ChatComponent implements OnInit {
 
     sendMessage() {
         let msj = {
-            msj: this.mensaje,
-            date: new Date(),
-            in: true,
-            cell: BackendService.phoneNumber
-        }
+            cell:"3004426191",
+            msj: [{msj:this.mensaje, date:new Date(), in: false}],
+            isread: false
+          }
         console.log(this.mensaje);
+        this.countries.push(msj);
         this.so.emit('support', msj, res => {
             this.mensaje = "";
         })
